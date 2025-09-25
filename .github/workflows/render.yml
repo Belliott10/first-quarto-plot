@@ -28,7 +28,7 @@ jobs:
         run: quarto render scatter.qmd --to pdf
 
       - name: Upload PDF
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4   # 👈 updated from v3 → v4
         with:
           name: scatter-pdf
           path: scatter.pdf
