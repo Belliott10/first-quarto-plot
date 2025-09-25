@@ -26,5 +26,10 @@ jobs:
       - name: Install Python dependencies
         run: pip install matplotlib
 
+      - name: Setup Quarto with TinyTeX
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: true
+
       - name: Render PDF
         run: quarto render scatter.qmd --to pdf
