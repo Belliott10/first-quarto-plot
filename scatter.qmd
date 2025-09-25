@@ -3,8 +3,6 @@ title: "My First Scatter Plot"
 format: pdf
 ---
 
-
-
 ```{python}
 import matplotlib.pyplot as plt
 
@@ -16,6 +14,5 @@ plt.title("My First Scatter Plot")
 plt.xlabel("X Values")
 plt.ylabel("Y Values")
 
-# Save the plot to a file so Quarto can include it
-plt.savefig("scatter.pdf")  
+plt.savefig("scatter.pdf")  # Save plot to file
 ```
