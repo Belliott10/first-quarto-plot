@@ -1,7 +1,9 @@
 ---
 title: "My First Scatter Plot"
+author: "Bukola"
 format: pdf
 ---
+
 
 ```{python}
 import matplotlib.pyplot as plt
