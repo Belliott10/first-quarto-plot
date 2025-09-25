@@ -16,6 +16,5 @@ plt.title("My First Scatter Plot")
 plt.xlabel("X Values")
 plt.ylabel("Y Values")
 
-
 plt.show()
 ```
