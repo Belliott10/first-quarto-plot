@@ -3,7 +3,6 @@ title: "My First Scatter Plot"
 format: pdf
 ---
 
-
 ```{python}
 import matplotlib.pyplot as plt
 
@@ -16,4 +15,3 @@ plt.xlabel("X Values")
 plt.ylabel("Y Values")
 plt.show()
 ```
-
