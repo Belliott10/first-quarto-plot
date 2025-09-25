@@ -1,13 +1,21 @@
 ---
 title: "My First Scatter Plot"
 author: "Bukola"
-format: pdf
+format: 
+  pdf:
+    documentclass: article
+    fontsize: 12pt
+    geometry: verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in
+    include-in-header: prelim.tex
+    keep-tex: true
+    cite-method: natbib
+    pdf-engine: pdflatex
 ---
 
 Hi I'm Bukola, and this is the plot for $f(x)=2x$, where $x \in \mathbb{R}$
 
-#| echo: false
 ```{python}
+#| echo: false
 import matplotlib.pyplot as plt
 
 # Data
