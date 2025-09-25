@@ -3,6 +3,8 @@ title: "My First Scatter Plot"
 format: pdf
 ---
 
+
+
 ```{python}
 import matplotlib.pyplot as plt
 
