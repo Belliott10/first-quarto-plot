@@ -6,6 +6,7 @@ format: pdf
 
 
 ```{python}
+#| echo: false
 import matplotlib.pyplot as plt
 
 #Data 
