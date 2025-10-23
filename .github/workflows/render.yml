@@ -30,9 +30,9 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          pip install matplotlib
-          pip install jupyter
-          pip install pyyaml
+          pip install --upgrade pip
+          pip install matplotlib jupyter pyyaml pandas numpy
+          pip install -U git+https://github.com/jgreathouse9/mlsynth.git
 
       - name: Render PDF
         run: quarto render scatter.qmd --to pdf
@@ -43,4 +43,3 @@ jobs:
           commit_message: "Add rendered scatter.pdf [skip ci]"
           file_pattern: scatter.pdf
           branch: main
-
