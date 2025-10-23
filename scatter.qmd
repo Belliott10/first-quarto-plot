@@ -28,10 +28,10 @@ df = pd.read_csv("Total_Non_Farm_Employment_Katrina.csv")
 # Shared config
 config = {
     "df": df,
-    "outcome": "Outcome",
-    "treat": "Treated",
-    "unitid": "Unit",
-    "time": "time",
+    "outcome": "YoY_NFE",
+    "treat": "Katrina",
+    "unitid": "MSA Title",
+    "time": "date",
     "display_graphs": False,
     "save": False,
     "counterfactual_color": ["red", "blue"]
