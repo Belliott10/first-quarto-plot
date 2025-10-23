@@ -31,7 +31,7 @@ config = {
     "outcome": "YoY_NFE",
     "treat": "Katrina",
     "unitid": "MSA Title",
-    "time": "date",
+    "time": "time",
     "display_graphs": False,
     "save": False,
     "counterfactual_color": ["red", "blue"]
