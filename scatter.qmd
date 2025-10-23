@@ -51,7 +51,7 @@ Hi I'm Bukola, and this is the plot for $f(x)=2x$, where $x \in \mathbb{R}$
 import pandas as pd
 import numpy as np
 from mlsynth.utils.helperutils import sc_diagplot
-
+from mlsynth import TSSC
 df = pd.read_csv("Total_Non_Farm_Employment_Katrina.csv")
 
 # Shared config
@@ -61,9 +61,11 @@ config = {
     "treat": "Katrina",
     "unitid": "MSA Title",
     "time": "time",
-    "display_graphs": False,
+    "display_graphs": True,
     "save": False,
     "counterfactual_color": ["red", "blue"]
 }
 sc_diagplot([config])
+
+Results = TSSC(config).fit()
 ```
