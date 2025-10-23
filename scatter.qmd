@@ -1,6 +1,6 @@
 ---
-title: "My First Scatter Plot"
-author: "Bukola"
+title: "The Economic Impact of Hurricane Katrina on Local Employment: A Synthetic Control Approach"
+author: "Bukola Elliott"
 format: 
   pdf:
     documentclass: article
@@ -11,6 +11,35 @@ format:
     cite-method: natbib
     pdf-engine: pdflatex
 ---
+
+
+# Introduction
+Hurricane Katrina, which struck the Gulf Coast in August 2005, remains one of the most devastating natural disasters in modern U.S. history. Beyond its immediate human and infrastructural costs, the hurricane caused widespread displacement, business closures, and labor market disruptions. Understanding the employment effects of such disasters is crucial for policymakers designing disaster relief, workforce recovery programs, and long-term resilience strategies.
+
+This study asks: What was the causal impact of Hurricane Katrina on total non-farm employment in the New Orleans metropolitan area? Specifically, did employment in the region recover, stabilize, or experience persistent losses relative to a counterfactual scenario where Katrina never occurred?
+
+Employment is one of the most policy-relevant outcomes after natural disasters, as it reflects both the ability of displaced populations to reintegrate into the labor market and the resilience of local industries. Examining aggregate employment provides insight into regional economic recovery and the capacity for long-term adaptation following catastrophic shocks.
+
+# Background and Literature Review
+The economic consequences of natural disasters have been studied extensively, yet results often diverge depending on methodology, data aggregation, and geographic scope. Early work by Skidmore and Toya (2002) suggested that disasters can stimulate 'creative destruction,' encouraging technological renewal and long-term growth. Conversely, Strobl (2011) and Cavallo et al. (2013) found that the impacts of hurricanes on local economies tend to be negative and persistent, particularly for poorer regions with limited adaptive capacity.
+
+Within the context of Hurricane Katrina, much of the research has focused on migration, housing markets, and labor supply (e.g., Vigdor 2008; Groen & Polivka 2010). Few studies have directly assessed aggregate employment dynamics at the metropolitan level. More recently, Yun and Kim (2022) applied the Synthetic Control Method (SCM) to study real GDP per capita in the New Orleans–Metairie MSA and Louisiana State. They highlighted issues of spatial aggregation bias and the pitfalls of relying on per capita measures when population declines sharply, potentially distorting inferences about recovery.
+
+This paper contributes to the existing literature in three ways. First, it focuses on aggregate employment at the metropolitan level rather than per capita output measures, providing a clearer view of labor market recovery. Second, by using monthly employment data from 1990–2004, the analysis benefits from a longer pre-treatment window, reducing the risk of overfitting and improving the credibility of the counterfactual. Third, by focusing on employment—a direct and policy-relevant measure of resilience—this study complements prior work that emphasizes income or GDP growth.
+
+# Data
+The analysis uses monthly employment data from the Bureau of Labor Statistics (BLS) Local Area Unemployment Statistics (LAUS) program, covering U.S. metropolitan statistical areas (MSAs) from January 1990 through December 2009. The key outcome variable is Total Non-Farm Employment, measured in thousands of workers. The treated unit is the New Orleans MSA, which was directly affected by Hurricane Katrina in August 2005. The donor pool consists of other U.S. MSAs not directly exposed to Katrina’s path or its economic aftershocks.
+
+The pre-treatment period spans 1990–2004, allowing for a long window to establish baseline trends and ensure accurate model fitting. The post-treatment period runs from 2005–2009, capturing both immediate and medium-term recovery dynamics. The dataset is already cleaned and structured, facilitating efficient analysis and replication. Descriptive analysis will compare employment trajectories across the treated and control MSAs before the event.
+
+# Emperical Strategy
+The empirical strategy employs the Synthetic Control Method (SCM) developed by Abadie and Gardeazabal (2003) and extended by Abadie, Diamond, and Hainmueller (2010). SCM estimates the causal impact of an intervention by constructing a weighted combination of control units that best approximates the pre-treatment characteristics of the treated unit. Formally, let Y₁t denote the employment in New Orleans (treated unit) and Y₀t represent the matrix of outcomes for potential donor MSAs. The synthetic control is derived by finding weights w that minimize the distance between New Orleans and the weighted average of donor MSAs in the pre-treatment period:
+
+$$ 
+\mathbf{w}^{\mathrm{SCM}} = \underset{\mathbf{w}^{\mathrm{SCM}} \in \mathcal{W}_{\mathrm{conv}}}{\operatorname*{argmin}} \; \left\| \mathbf{y}_1^{\mathcal{T}_1} - \mathbf{Y}_0^{\mathcal{T}_1} \mathbf{w}^{\mathrm{SCM}} \right\|_2^2,
+$$
+
+where $\mathcal{W}_{\mathrm{conv}} = \{\mathbf{w}^{\mathrm{SCM}} \in \mathbb{R}_{\ge 0}^{N_0} \mid \mathbf{1}^\top \mathbf{w} = 1\}$.
 
 Hi I'm Bukola, and this is the plot for $f(x)=2x$, where $x \in \mathbb{R}$
 
