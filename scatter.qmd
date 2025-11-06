@@ -45,41 +45,19 @@ Hi I'm Bukola, and this is the plot for $f(x)=2x$, where $x \in \mathbb{R}$
 
 ```{python}
 
+#| fig-align: center
+#| echo: false
+
 import pandas as pd
 import numpy as np
 from mlsynth.utils.helperutils import sc_diagplot
 from mlsynth import TSSC
-import matplotlib.pyplot as plt
-
-# Load data
 df = pd.read_csv("Total_Non_Farm_Employment_Katrina.csv")
 
-#| label: naive-comparison
-#| fig-cap: "Naive comparison of New Orleans vs selected MSAs before and after Hurricane Katrina"
-#| fig-align: center
 
-treated = df[df["MSA Title"] == "New Orleans-Metairie, LA"]
-donors = df[df["MSA Title"].isin(["Atlanta-Sandy Springs, GA", "Dallas-Fort Worth, TX", "Birmingham-Hoover, AL"])]
 
-plt.figure(figsize=(10, 6))
 
-# Plot treated unit
-plt.plot(treated["time"], treated["YoY_NFE"], label="New Orleans (Treated)", color="red", linewidth=2)
-
-# Plot donor MSAs
-for msa in donors["MSA Title"].unique():
-    sub = donors[donors["MSA Title"] == msa]
-    plt.plot(sub["time"], sub["YoY_NFE"], label=msa, linestyle="--", alpha=0.7)
-
-plt.axvline(x=2005, color="black", linestyle=":", label="Hurricane Katrina (2005)")
-plt.title("Naive Comparison: Employment Trends Before and After Katrina")
-plt.xlabel("Year")
-plt.ylabel("Year-over-Year Employment Growth (%)")
-plt.legend()
-plt.grid(True)
-plt.show()
-
-# Shared config for SCM
+# Shared config
 config = {
     "df": df,
     "outcome": "YoY_NFE",
@@ -90,59 +68,9 @@ config = {
     "save": False,
     "counterfactual_color": ["red", "blue"]
 }
-
-# Run SCM
 sc_diagplot([config])
+
 Results = TSSC(config).fit()
 
-#| label: gap-plot
-#| fig-cap: "Gap Plot: Difference Between Actual and Synthetic Employment for New Orleans"
-#| fig-align: center
-
-# Access SCM result
-synth_results = Results[0]
-
-# Use lowercase attribute names
-actual = synth_results.y_treated
-synthetic = synth_results.y_synthetic
-
-# Compute the gap
-gap = actual - synthetic
-
-plt.figure(figsize=(10,6))
-plt.plot(synth_results.time, gap, color="purple", linewidth=2)
-plt.axvline(x=synth_results.T0, color="black", linestyle=":", label="Treatment Year")
-plt.axhline(y=0, color="gray", linestyle="--", linewidth=1)
-plt.title("Gap Plot: Actual - Synthetic Employment in New Orleans")
-plt.xlabel("Year")
-plt.ylabel("Employment Gap (Thousands)")
-plt.legend()
-plt.grid(True)
-plt.show()
-
-#| label: placebo-plot
-#| fig-cap: "Placebo Test: SCM Gaps for New Orleans and Donor Regions"
-#| fig-align: center
-
-plt.figure(figsize=(10,6))
-
-# Plot placebo gaps
-for r in Results:
-    gap = r.y_treated - r.y_synthetic
-    plt.plot(r.time, gap, color="lightgray", linewidth=1)
-
-# Highlight New Orleans (treated unit)
-treated = Results[0]
-plt.plot(treated.time, treated.y_treated - treated.y_synthetic,
-         color="purple", linewidth=2.5, label="New Orleans")
-
-plt.axvline(x=treated.T0, color="black", linestyle=":", label="Treatment Year")
-plt.axhline(y=0, color="gray", linestyle="--", linewidth=1)
-plt.title("Placebo Test: Synthetic Control Gaps Across Regions")
-plt.xlabel("Year")
-plt.ylabel("Employment Gap (Thousands)")
-plt.legend()
-plt.grid(True)
-plt.show()
 
 ```
