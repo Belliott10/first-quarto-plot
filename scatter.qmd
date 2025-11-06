@@ -132,20 +132,21 @@ plt.show()
 #| fig-cap: "Placebo Test: Gap Plots for Donor MSAs"
 #| fig-align: center
 
-# Select a few donor MSAs as "placebo treated"
+import matplotlib.pyplot as plt
 
+# Select a few donor MSAs as "placebo treated"
 placebo_msas = ["Atlanta-Sandy Springs, GA", "Dallas-Fort Worth, TX", "Birmingham-Hoover, AL"]
 
 plt.figure(figsize=(10,6))
 
 for msa in placebo_msas:
-# Find the corresponding synthetic control for each placebo unit
-idx = [i for i, r in enumerate(Results) if r["treated_unit"] == msa]
-if len(idx) == 0:
-continue
-r = Results[idx[0]]
-gap_placebo = r["Y_treated"] - r["Y_synthetic"]
-plt.plot(r["time"], gap_placebo, linestyle="--", alpha=0.7, label=msa)
+    # Find the corresponding synthetic control for each placebo unit
+    idx = [i for i, r in enumerate(Results) if r["treated_unit"] == msa]
+    if len(idx) == 0:
+        continue
+    r = Results[idx[0]]
+    gap_placebo = r["Y_treated"] - r["Y_synthetic"]
+    plt.plot(r["time"], gap_placebo, linestyle="--", alpha=0.7, label=msa)
 
 plt.axvline(x=2005, color="black", linestyle=":", label="Katrina (2005)")
 plt.axhline(y=0, color="gray", linestyle="--", linewidth=1)
@@ -155,6 +156,5 @@ plt.ylabel("Employment Gap (Thousands)")
 plt.legend()
 plt.grid(True)
 plt.show()
-
 
 ```
