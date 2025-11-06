@@ -82,39 +82,6 @@ plt.grid(True)
 plt.show()
 
 
-#| label: gap-plot
-#| fig-cap: "Gap Plot: Difference Between Actual and Synthetic Employment for New Orleans"
-#| fig-align: center
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Access the synthetic control result object
-
-synth_results = Results.results_  # this stores your fitted output
-
-# Extract actual and synthetic series
-
-actual = synth_results["Y_treated"]
-synthetic = synth_results["Y_synthetic"]
-
-# Compute the gap
-
-gap = actual - synthetic
-
-plt.figure(figsize=(10, 6))
-plt.plot(synth_results["time"], gap, color="purple", linewidth=2)
-plt.axvline(x=2005, color="black", linestyle=":", label="Katrina (2005)")
-plt.axhline(y=0, color="gray", linestyle="--", linewidth=1)
-plt.title("Gap Plot: Actual - Synthetic Employment in New Orleans")
-plt.xlabel("Year")
-plt.ylabel("Employment Gap (Thousands)")
-plt.legend()
-plt.grid(True)
-plt.show()
-
-
-
 
 
 
@@ -132,4 +99,32 @@ config = {
 sc_diagplot([config])
 
 Results = TSSC(config).fit()
+
+
+
+#| label: gap-plot
+#| fig-cap: "Gap Plot: Difference Between Actual and Synthetic Employment for New Orleans"
+#| fig-align: center
+
+# Access the synthetic control result object
+synth_results = Results.results_  # now Results is already defined
+
+# Extract actual and synthetic series
+actual = synth_results["Y_treated"]
+synthetic = synth_results["Y_synthetic"]
+
+# Compute the gap
+gap = actual - synthetic
+
+plt.figure(figsize=(10, 6))
+plt.plot(synth_results["time"], gap, color="purple", linewidth=2)
+plt.axvline(x=2005, color="black", linestyle=":", label="Katrina (2005)")
+plt.axhline(y=0, color="gray", linestyle="--", linewidth=1)
+plt.title("Gap Plot: Actual - Synthetic Employment in New Orleans")
+plt.xlabel("Year")
+plt.ylabel("Employment Gap (Thousands)")
+plt.legend()
+plt.grid(True)
+plt.show()
+
 ```
