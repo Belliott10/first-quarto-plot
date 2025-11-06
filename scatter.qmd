@@ -65,15 +65,13 @@ donors = df[df["MSA Title"].isin(["Atlanta-Sandy Springs, GA", "Dallas-Fort Wort
 
 plt.figure(figsize=(10, 6))
 
-# Plot treated
-
+# Plot treated unit
 plt.plot(treated["time"], treated["YoY_NFE"], label="New Orleans (Treated)", color="red", linewidth=2)
 
 # Plot selected donor MSAs
-
 for msa in donors["MSA Title"].unique():
-sub = donors[donors["MSA Title"] == msa]
-plt.plot(sub["time"], sub["YoY_NFE"], label=msa, linestyle="--", alpha=0.7)
+    sub = donors[donors["MSA Title"] == msa]
+    plt.plot(sub["time"], sub["YoY_NFE"], label=msa, linestyle="--", alpha=0.7)
 
 plt.axvline(x=2005, color="black", linestyle=":", label="Hurricane Katrina (2005)")
 plt.title("Naive Comparison: Employment Trends Before and After Katrina")
@@ -82,6 +80,7 @@ plt.ylabel("Year-over-Year Employment Growth (%)")
 plt.legend()
 plt.grid(True)
 plt.show()
+
 
 #| label: gap-plot
 #| fig-cap: "Gap Plot: Difference Between Actual and Synthetic Employment for New Orleans"
