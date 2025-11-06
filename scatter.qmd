@@ -54,6 +54,71 @@ from mlsynth.utils.helperutils import sc_diagplot
 from mlsynth import TSSC
 df = pd.read_csv("Total_Non_Farm_Employment_Katrina.csv")
 
+#| label: naive-comparison
+#| fig-cap: "Naive comparison of New Orleans vs selected MSAs before and after Hurricane Katrina"
+#| fig-align: center
+
+import matplotlib.pyplot as plt
+
+treated = df[df["MSA Title"] == "New Orleans-Metairie, LA"]
+donors = df[df["MSA Title"].isin(["Atlanta-Sandy Springs, GA", "Dallas-Fort Worth, TX", "Birmingham-Hoover, AL"])]
+
+plt.figure(figsize=(10, 6))
+
+# Plot treated
+
+plt.plot(treated["time"], treated["YoY_NFE"], label="New Orleans (Treated)", color="red", linewidth=2)
+
+# Plot selected donor MSAs
+
+for msa in donors["MSA Title"].unique():
+sub = donors[donors["MSA Title"] == msa]
+plt.plot(sub["time"], sub["YoY_NFE"], label=msa, linestyle="--", alpha=0.7)
+
+plt.axvline(x=2005, color="black", linestyle=":", label="Hurricane Katrina (2005)")
+plt.title("Naive Comparison: Employment Trends Before and After Katrina")
+plt.xlabel("Year")
+plt.ylabel("Year-over-Year Employment Growth (%)")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+#| label: gap-plot
+#| fig-cap: "Gap Plot: Difference Between Actual and Synthetic Employment for New Orleans"
+#| fig-align: center
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Access the synthetic control result object
+
+synth_results = Results.results_  # this stores your fitted output
+
+# Extract actual and synthetic series
+
+actual = synth_results["Y_treated"]
+synthetic = synth_results["Y_synthetic"]
+
+# Compute the gap
+
+gap = actual - synthetic
+
+plt.figure(figsize=(10, 6))
+plt.plot(synth_results["time"], gap, color="purple", linewidth=2)
+plt.axvline(x=2005, color="black", linestyle=":", label="Katrina (2005)")
+plt.axhline(y=0, color="gray", linestyle="--", linewidth=1)
+plt.title("Gap Plot: Actual - Synthetic Employment in New Orleans")
+plt.xlabel("Year")
+plt.ylabel("Employment Gap (Thousands)")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+
+
+
+
+
 # Shared config
 config = {
     "df": df,
