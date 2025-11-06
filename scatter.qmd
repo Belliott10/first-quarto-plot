@@ -108,19 +108,15 @@ Results = TSSC(config).fit()
 
 import matplotlib.pyplot as plt
 
-# Access the first fitted model (Simplex / normal SCM)
-synth_results = Results[0]
+# Get the fitted DataFrame from your first SCM result
+fitted_df = Results[0].fitted
 
-# Extract actual and synthetic series
-actual = synth_results.Y_treated      # note: dot notation, not subscript
-synthetic = synth_results.Y_synthetic
-time = synth_results.time
+actual = fitted_df["Y_treated"]
+synthetic = fitted_df["Y_synthetic"]
+time = fitted_df["time"]
 
-# Compute the gap
 gap = actual - synthetic
 
-# Plot
-import matplotlib.pyplot as plt
 plt.figure(figsize=(10,6))
 plt.plot(time, gap, color="purple", linewidth=2)
 plt.axvline(x=2005, color="black", linestyle=":", label="Katrina (2005)")
@@ -139,19 +135,17 @@ plt.show()
 
 import matplotlib.pyplot as plt
 
-# Select a few donor MSAs as "placebo treated"
 placebo_msas = ["Atlanta-Sandy Springs, GA", "Dallas-Fort Worth, TX", "Birmingham-Hoover, AL"]
 
 plt.figure(figsize=(10,6))
 
-for msa in placebo_msas:
-    # Find the corresponding synthetic control for each placebo unit
-    idx = [i for i, r in enumerate(Results) if r["treated_unit"] == msa]
-    if len(idx) == 0:
+for i, r in enumerate(Results):
+    msa_name = r.config["df"].loc[r.config["df"]["MSA Title"] == r.config["unitid"], "MSA Title"].iloc[0]
+    if msa_name not in placebo_msas:
         continue
-    r = Results[idx[0]]
-    gap_placebo = r["Y_treated"] - r["Y_synthetic"]
-    plt.plot(r["time"], gap_placebo, linestyle="--", alpha=0.7, label=msa)
+    fitted_df = r.fitted
+    gap_placebo = fitted_df["Y_treated"] - fitted_df["Y_synthetic"]
+    plt.plot(fitted_df["time"], gap_placebo, linestyle="--", alpha=0.7, label=msa_name)
 
 plt.axvline(x=2005, color="black", linestyle=":", label="Katrina (2005)")
 plt.axhline(y=0, color="gray", linestyle="--", linewidth=1)
