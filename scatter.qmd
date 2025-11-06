@@ -72,7 +72,11 @@ sc_diagplot([config])
 
 Results = TSSC(config).fit()
 
+
+print(type(Results))
+print(type(Results[0]))
 print(dir(Results[0]))
+
 
 
 ```
