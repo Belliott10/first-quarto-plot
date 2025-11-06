@@ -108,19 +108,24 @@ Results = TSSC(config).fit()
 
 import matplotlib.pyplot as plt
 
-# Grab the Simplex/first result from your already fitted Results
-
+# Access the first fitted model (Simplex / normal SCM)
 synth_results = Results[0]
 
+# Extract actual and synthetic series
+actual = synth_results.Y_treated      # note: dot notation, not subscript
+synthetic = synth_results.Y_synthetic
+time = synth_results.time
+
 # Compute the gap
+gap = actual - synthetic
 
-gap = synth_results["Y_treated"] - synth_results["Y_synthetic"]
-
+# Plot
+import matplotlib.pyplot as plt
 plt.figure(figsize=(10,6))
-plt.plot(synth_results["time"], gap, color="purple", linewidth=2)
+plt.plot(time, gap, color="purple", linewidth=2)
 plt.axvline(x=2005, color="black", linestyle=":", label="Katrina (2005)")
 plt.axhline(y=0, color="gray", linestyle="--", linewidth=1)
-plt.title("Gap Plot: Actual - Synthetic Employment")
+plt.title("Gap Plot: Actual - Synthetic Employment in New Orleans")
 plt.xlabel("Year")
 plt.ylabel("Employment Gap (Thousands)")
 plt.legend()
