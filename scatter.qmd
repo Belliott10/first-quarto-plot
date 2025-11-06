@@ -106,54 +106,49 @@ Results = TSSC(config).fit()
 #| fig-cap: "Gap Plot: Difference Between Actual and Synthetic Employment for New Orleans"
 #| fig-align: center
 
-import matplotlib.pyplot as plt
+# Safely access the fitted results
+synth_results = Results[0].results_
 
-# Get the fitted DataFrame from your first SCM result
-fitted_df = Results[0].fitted
+# Extract actual and synthetic series
+actual = synth_results["Y_treated"]
+synthetic = synth_results["Y_synthetic"]
+time = synth_results["time"]
 
-actual = fitted_df["Y_treated"]
-synthetic = fitted_df["Y_synthetic"]
-time = fitted_df["time"]
-
+# Compute the gap
 gap = actual - synthetic
 
+# Plot the gap
 plt.figure(figsize=(10,6))
 plt.plot(time, gap, color="purple", linewidth=2)
-plt.axvline(x=2005, color="black", linestyle=":", label="Katrina (2005)")
-plt.axhline(y=0, color="gray", linestyle="--", linewidth=1)
-plt.title("Gap Plot: Actual - Synthetic Employment in New Orleans")
+plt.axvline(x=synth_results["T0"], color="gray", linestyle="--")
+plt.title("Gap Plot: Actual - Synthetic (New Orleans Employment)")
 plt.xlabel("Year")
-plt.ylabel("Employment Gap (Thousands)")
-plt.legend()
-plt.grid(True)
+plt.ylabel("Gap (Actual - Synthetic)")
 plt.show()
 
 
-#| label: placebo-plot
-#| fig-cap: "Placebo Test: Gap Plots for Donor MSAs"
+
+
+#| label: placebo-test
+#| fig-cap: "Placebo Test: Synthetic Control Gaps for Treated and Control Units"
 #| fig-align: center
 
-import matplotlib.pyplot as plt
-
-placebo_msas = ["Atlanta-Sandy Springs, GA", "Dallas-Fort Worth, TX", "Birmingham-Hoover, AL"]
-
+# Loop through all fitted units (treated + controls)
 plt.figure(figsize=(10,6))
 
-for i, r in enumerate(Results):
-    msa_name = r.config["df"].loc[r.config["df"]["MSA Title"] == r.config["unitid"], "MSA Title"].iloc[0]
-    if msa_name not in placebo_msas:
-        continue
-    fitted_df = r.fitted
-    gap_placebo = fitted_df["Y_treated"] - fitted_df["Y_synthetic"]
-    plt.plot(fitted_df["time"], gap_placebo, linestyle="--", alpha=0.7, label=msa_name)
+for res in Results:
+    r = res.results_
+    gap = r["Y_treated"] - r["Y_synthetic"]
+    if r["treated_unit"] == "New Orleans":
+        plt.plot(r["time"], gap, color="purple", linewidth=2, label="New Orleans (Treated)")
+    else:
+        plt.plot(r["time"], gap, color="lightgray", alpha=0.7)
 
-plt.axvline(x=2005, color="black", linestyle=":", label="Katrina (2005)")
-plt.axhline(y=0, color="gray", linestyle="--", linewidth=1)
-plt.title("Placebo Test: Gaps for Donor MSAs")
+plt.axvline(x=r["T0"], color="gray", linestyle="--")
+plt.title("Placebo Test: Gaps for Treated and Control Units")
 plt.xlabel("Year")
-plt.ylabel("Employment Gap (Thousands)")
+plt.ylabel("Gap (Actual - Synthetic)")
 plt.legend()
-plt.grid(True)
 plt.show()
 
 ```
