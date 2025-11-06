@@ -106,49 +106,54 @@ Results = TSSC(config).fit()
 #| fig-cap: "Gap Plot: Difference Between Actual and Synthetic Employment for New Orleans"
 #| fig-align: center
 
-# Safely access the fitted results
-synth_results = Results[0].results_
+import matplotlib.pyplot as plt
 
-# Extract actual and synthetic series
-actual = synth_results["Y_treated"]
-synthetic = synth_results["Y_synthetic"]
-time = synth_results["time"]
+# Access the first (and likely only) SCM result
+synth_results = Results[0]
+
+# Extract actual and synthetic values
+actual = synth_results.Y_treated
+synthetic = synth_results.Y_synthetic
 
 # Compute the gap
 gap = actual - synthetic
 
-# Plot the gap
 plt.figure(figsize=(10,6))
-plt.plot(time, gap, color="purple", linewidth=2)
-plt.axvline(x=synth_results["T0"], color="gray", linestyle="--")
-plt.title("Gap Plot: Actual - Synthetic (New Orleans Employment)")
+plt.plot(synth_results.time, gap, color="purple", linewidth=2)
+plt.axvline(x=synth_results.T0, color="black", linestyle=":", label="Treatment Year")
+plt.axhline(y=0, color="gray", linestyle="--", linewidth=1)
+plt.title("Gap Plot: Actual - Synthetic Employment in New Orleans")
 plt.xlabel("Year")
-plt.ylabel("Gap (Actual - Synthetic)")
+plt.ylabel("Employment Gap (Thousands)")
+plt.legend()
+plt.grid(True)
 plt.show()
 
 
 
 
-#| label: placebo-test
-#| fig-cap: "Placebo Test: Synthetic Control Gaps for Treated and Control Units"
+#| label: placebo-plot
+#| fig-cap: "Placebo Test: SCM Gaps for New Orleans and Donor Regions"
 #| fig-align: center
 
-# Loop through all fitted units (treated + controls)
 plt.figure(figsize=(10,6))
 
-for res in Results:
-    r = res.results_
-    gap = r["Y_treated"] - r["Y_synthetic"]
-    if r["treated_unit"] == "New Orleans":
-        plt.plot(r["time"], gap, color="purple", linewidth=2, label="New Orleans (Treated)")
-    else:
-        plt.plot(r["time"], gap, color="lightgray", alpha=0.7)
+for r in Results:
+    gap = r.Y_treated - r.Y_synthetic
+    plt.plot(r.time, gap, color="lightgray", linewidth=1)
 
-plt.axvline(x=r["T0"], color="gray", linestyle="--")
-plt.title("Placebo Test: Gaps for Treated and Control Units")
+# Highlight New Orleans (assuming it's the treated one)
+treated = Results[0]
+plt.plot(treated.time, treated.Y_treated - treated.Y_synthetic,
+         color="purple", linewidth=2.5, label="New Orleans")
+
+plt.axvline(x=treated.T0, color="black", linestyle=":", label="Treatment Year")
+plt.axhline(y=0, color="gray", linestyle="--", linewidth=1)
+plt.title("Placebo Test: Synthetic Control Gaps Across Regions")
 plt.xlabel("Year")
-plt.ylabel("Gap (Actual - Synthetic)")
+plt.ylabel("Employment Gap (Thousands)")
 plt.legend()
+plt.grid(True)
 plt.show()
 
 ```
