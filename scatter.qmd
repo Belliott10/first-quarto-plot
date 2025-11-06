@@ -76,6 +76,10 @@ Results = TSSC(config).fit()
 print(hasattr(Results[0], "dict"))
 print(hasattr(Results[0], "model_dump"))
 
+print(Results[0].dict())
+# or
+print(Results[0].model_dump())
+
 
 
 ```
