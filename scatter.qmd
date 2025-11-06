@@ -106,25 +106,55 @@ Results = TSSC(config).fit()
 #| fig-cap: "Gap Plot: Difference Between Actual and Synthetic Employment for New Orleans"
 #| fig-align: center
 
-# Access the synthetic control result object
-synth_results = Results.results_  # now Results is already defined
+import matplotlib.pyplot as plt
 
-# Extract actual and synthetic series
-actual = synth_results["Y_treated"]
-synthetic = synth_results["Y_synthetic"]
+# Grab the Simplex/first result from your already fitted Results
+
+synth_results = Results[0]
 
 # Compute the gap
-gap = actual - synthetic
 
-plt.figure(figsize=(10, 6))
+gap = synth_results["Y_treated"] - synth_results["Y_synthetic"]
+
+plt.figure(figsize=(10,6))
 plt.plot(synth_results["time"], gap, color="purple", linewidth=2)
 plt.axvline(x=2005, color="black", linestyle=":", label="Katrina (2005)")
 plt.axhline(y=0, color="gray", linestyle="--", linewidth=1)
-plt.title("Gap Plot: Actual - Synthetic Employment in New Orleans")
+plt.title("Gap Plot: Actual - Synthetic Employment")
 plt.xlabel("Year")
 plt.ylabel("Employment Gap (Thousands)")
 plt.legend()
 plt.grid(True)
 plt.show()
+
+
+#| label: placebo-plot
+#| fig-cap: "Placebo Test: Gap Plots for Donor MSAs"
+#| fig-align: center
+
+# Select a few donor MSAs as "placebo treated"
+
+placebo_msas = ["Atlanta-Sandy Springs, GA", "Dallas-Fort Worth, TX", "Birmingham-Hoover, AL"]
+
+plt.figure(figsize=(10,6))
+
+for msa in placebo_msas:
+# Find the corresponding synthetic control for each placebo unit
+idx = [i for i, r in enumerate(Results) if r["treated_unit"] == msa]
+if len(idx) == 0:
+continue
+r = Results[idx[0]]
+gap_placebo = r["Y_treated"] - r["Y_synthetic"]
+plt.plot(r["time"], gap_placebo, linestyle="--", alpha=0.7, label=msa)
+
+plt.axvline(x=2005, color="black", linestyle=":", label="Katrina (2005)")
+plt.axhline(y=0, color="gray", linestyle="--", linewidth=1)
+plt.title("Placebo Test: Gaps for Donor MSAs")
+plt.xlabel("Year")
+plt.ylabel("Employment Gap (Thousands)")
+plt.legend()
+plt.grid(True)
+plt.show()
+
 
 ```
