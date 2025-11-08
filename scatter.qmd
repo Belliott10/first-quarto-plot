@@ -73,12 +73,68 @@ sc_diagplot([config])
 Results = TSSC(config).fit()
 
 
-print(hasattr(Results[0], "dict"))
-print(hasattr(Results[0], "model_dump"))
+y_obs = Results[3].raw_results['Vectors']['Observed Unit']
+y_cf = Results[3].raw_results['Vectors']['Counterfactual']
+post_periods = Results[3].raw_results['Fit']['Post-Periods']
+pre_periods = Results[3].raw_results['Fit']['Pre-Periods']
 
-print(Results[0].dict())
-# or
-print(Results[0].model_dump())
+# Parameters
+split_date = "2005-08"
+
+# Create the pre-treatment date range
+pre_index = pd.date_range(
+    end=pd.Period(split_date, freq="M").start_time - pd.offsets.MonthEnd(1),
+    periods=pre_periods,
+    freq="M"
+)
+
+# Create the post-treatment date range (including August 2005)
+post_index = pd.date_range(
+    start=pd.Period(split_date, freq="M").start_time,
+    periods=post_periods,
+    freq="M"
+)
+
+# Combine them
+full_index = pre_index.append(post_index)
+
+
+
+
+
+
+
+import matplotlib.pyplot as plt
+
+# --- Plot observed vs synthetic control ---
+plt.figure(figsize=(12, 6))
+plt.plot(full_index, y_obs, label="Observed (Treated Unit)", linewidth=2)
+plt.plot(full_index, y_cf, label="Synthetic Control", linestyle="--", linewidth=2)
+plt.axvline(x=pd.to_datetime(split_date), color="gray", linestyle=":", label="Treatment (Aug 2005)")
+
+plt.xlabel("Date")
+plt.ylabel("Outcome (YoY Non-Farm Employment)")
+plt.title("Observed vs Synthetic Control — Hurricane Katrina")
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+
+# --- Plot the treatment effect (the gap) ---
+gap = y_obs - y_cf
+
+plt.figure(figsize=(12, 6))
+plt.plot(full_index, gap, color="black", linewidth=2, label="Treatment Effect (Observed − Synthetic)")
+plt.axhline(0, color="red", linestyle="--")
+plt.axvline(x=pd.to_datetime(split_date), color="gray", linestyle=":", label="Treatment (Aug 2005)")
+
+plt.xlabel("Date")
+plt.ylabel("Gap")
+plt.title("Estimated Treatment Effect — Hurricane Katrina")
+plt.legend()
+plt.tight_layout()
+plt.show()
+
 
 
 
