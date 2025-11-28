@@ -138,4 +138,34 @@ plt.show()
 
 
 
+
+# To make sure the date column is datetime
+df["date"] = pd.to_datetime(df["date"])
+
+# To define the placebo treatment date and the treated unit
+platreat_date = "2003-08-31"
+treated_unit = "New Orleans-Metairie, LA MSA"
+
+# Create the placebo treatment variable
+df["Katrina"] = np.where(
+    (df["MSA Title"] == treated_unit) & (df["date"] >= platreat_date),
+    1,
+    0
+)
+
+
+# Shared config
+config = {
+    "df": df,
+    "outcome": "YoY_NFE",
+    "treat": "Katrina",
+    "unitid": "MSA Title",
+    "time": "time",
+    "display_graphs": True,
+    "save": False,
+    "counterfactual_color": ["red", "blue"]
+}
+
+Results = TSSC(config).fit()
+
 ```
