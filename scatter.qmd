@@ -11,10 +11,11 @@ format:
     keep-tex: true
     cite-method: natbib
     pdf-engine: pdflatex
+execute:
+  echo: false
 ---
 
 # Abstract
-
 This paper examines the causal impact of Hurricane Katrina on employment in the New Orleans metropolitan area using the Two-Step Synthetic Control (TSSC) method. Hurricane Katrina, which struck the Gulf Coast in August 2005, was one of the most devastating natural disasters in modern U.S. history, causing widespread displacement and labor market disruptions. Using monthly employment data from 1990 to 2009, I construct a synthetic control from 273 unaffected metropolitan statistical areas that closely matches pre-Katrina New Orleans employment patterns. The TSSC algorithm selects Modified Synthetic Control with covariates (MSCc) as the optimal method based on pre-treatment fit. The analysis reveals catastrophic employment losses: an immediate 33% year-over-year decline following the hurricane, with an average treatment effect of -7.37 percentage points over 2005-2009. In-time placebo tests validate causality, showing no similar effect when treatment is artificially placed in 2003. This study contributes to disaster economics by analyzing aggregate MSA-level employment with a 15-year pre-treatment period, avoiding spatial aggregation bias and per capita measurement issues. Results indicate substantial but partially recovered employment impacts, with important implications for disaster recovery policy.
 
 # Introduction
@@ -22,26 +23,20 @@ On August 29, 2005, Hurricane Katrina made landfall on the Gulf Coast, unleashin
 To answer this question, I employ the Two-Step Synthetic Control (TSSC) method developed by Li and Shankar (2023), which algorithmically selects the optimal synthetic control approach from multiple candidates and then estimates the treatment effect. The ideal experiment would randomly assign hurricane exposure to metropolitan areas, which is clearly infeasible. Instead, the identification strategy relies on the synthetic control method's core assumption: absent Hurricane Katrina, New Orleans employment would have evolved similarly to an optimally weighted combination of control MSAs. Employment is one of the most policy-relevant outcomes after natural disasters, as it reflects both the ability of displaced populations to reintegrate into the labor market and the resilience of local industries. Examining aggregate employment provides insight into regional economic recovery and the capacity for long-term adaptation following catastrophic shocks.
 
 # Background and Literature Review
-
 ## Prior Research on Hurricane Katrina
-
 The economic consequences of natural disasters have been studied extensively, yet results often diverge depending on methodology, data aggregation, and geographic scope. The literature on Hurricane Katrina's economic impacts spans individual outcomes, migration patterns, and aggregate effects. Groen and Polivka (2008a, 2008b) used Current Population Survey data to analyze labor market outcomes of evacuees through October 2006 and found evacuees experienced worse labor market outcomes initially, with homeowners and higher-income individuals more likely to return. Deryugina, Kawano, and Levitt (2018) tracked victims over a decade using tax data and found resilient individual outcomes, with earnings gaps erased within a year through federal aid and worker mobility to stronger labor markets. Groen, Kutzbach, and Polivka (2020) found long-term heterogeneity, with some workers permanently relocating to higher-wage markets while returnees faced persistent challenges.
 Vigdor (2008) documented that nearly half of evacuees had not returned by mid-2007, with selective return migration causing demographic shifts. Fewer studies examine aggregate regional employment. Yun and Kim (2022) applied synthetic control to GDP per capita, cautioning that per capita measures might misrepresent growth when population declines sharply highlighting spatial aggregation bias and measurement issues which can distort disaster impact estimates and that MSA-level analysis better captures localized shocks than state-level aggregation. 
 
 ## Contribution of This Study
-
 This paper contributes to disaster economics literatures in several specific ways that address gaps in prior research literatures. Unlike most prior studies on Hurricane Katrina that focus primarily on individual-level outcomes or use potentially problematic per capita measures, this analysis provides direct evidence on the labor market's aggregate capacity to recover from the disaster. The use of year-over-year employment growth rates avoids level-based measurement issues while capturing the dynamics of employment change. The 15-year pre-treatment period (1990-2004) improves counterfactual credibility and reduces overfitting concerns compared to shorter baseline periods.
 This paper contributes to the existing literature in three ways. First, it focuses on aggregate employment at the metropolitan level rather than per capita output measures, providing a clearer view of labor market recovery. Second, by using monthly employment data from 1990–2004, the analysis benefits from a longer pre-treatment window, reducing the risk of overfitting and improving the credibility of the counterfactual. Third, by focusing on employment—a direct and policy-relevant measure of resilience—this study complements prior work that emphasizes income or GDP growth.
 
 # Data and Methodology
-
 ## Data
-
 The analysis uses monthly employment data from the Bureau of Labor Statistics (BLS) Local Area Unemployment Statistics (LAUS) program, covering U.S. metropolitan statistical areas from January 1990 through December 2009. The LAUS program provides comprehensive employment data for MSAs based on a combination of Current Population Survey estimates, unemployment insurance claims, and employment data from the Current Employment Statistics program. The outcome variable is year-over-year percentage change in total non-farm employment, which captures employment growth dynamics across all sectors and automatically removes seasonal patterns by comparing each month to the same month one year earlier. 
 The treated unit is the New Orleans–Metairie MSA, which was directly and severely impacted by Hurricane Katrina in August 2005. The donor pool consists of 273 other U.S. metropolitan statistical areas that were not directly exposed to Hurricane Katrina's destruction. MSAs in Louisiana (other than New Orleans), Mississippi, and Alabama that experienced direct hurricane impacts are excluded from the donor pool to ensure that control units were not themselves affected by the disaster. The pre-treatment period spans January 1990 through August 2005 (188 months), providing a lengthy baseline for matching. The post-treatment period covers September 2005 through December 2009 (52 months), allowing examination of both immediate and medium-term employment effects. The dataset is already cleaned and structured, facilitating efficient analysis and replication.
 
-##Emperical Strategy
-
+## Emperical Strategy
 The empirical strategy employs the Synthetic Control Method (SCM) developed by Abadie and Gardeazabal (2003) and extended by Abadie, Diamond, and Hainmueller (2010). SCM estimates the causal impact of an intervention by constructing a weighted combination of control units that best approximates the pre-treatment characteristics of the treated unit. The synthetic control finds the weight vector w that minimizes the distance between New Orleans and the weighted average of donor MSAs in the pre-treatment period:
 $$ 
 \mathbf{w}^{\mathrm{SCM}} = \underset{\mathbf{w}^{\mathrm{SCM}} \in \mathcal{W}_{\mathrm{conv}}}{\operatorname*{argmin}} \; \left\| \mathbf{y}_1^{\mathcal{T}_1} - \mathbf{Y}_0^{\mathcal{T}_1} \mathbf{w}^{\mathrm{SCM}} \right\|_2^2,
@@ -311,6 +306,9 @@ plt.show()
 
 \newpage
 
+\appendix
+\renewcommand{\thefigure}{A\arabic{figure}}
+\setcounter{figure}{0}
 # Appendix {.unnumbered}
 
 ```{python}
