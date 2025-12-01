@@ -15,6 +15,27 @@ execute:
   echo: false
 ---
 
+\begin{titlepage}
+\begin{center}
+
+\vspace*{3cm}
+
+{\LARGE \textbf{The Economic Impact of Hurricane Katrina\ on Local Employment:[0.2cm]
+A Synthetic Control Approach}}[2cm]
+
+{\Large Bukola Elliott}[0.5cm]
+M.A. Economics[0.5cm]
+Georgia State University[1.5cm]
+
+{\large ECON 8899 — Causal Inference and Evidence-based Policy}\
+{\large Professor Stefano Carattini}[1cm]
+
+{\large Fall 2025}
+
+\end{center}
+\end{titlepage}
+
+
 # Abstract
 This paper examines the causal impact of Hurricane Katrina on employment in the New Orleans metropolitan area using the Two-Step Synthetic Control (TSSC) method. Hurricane Katrina, which struck the Gulf Coast in August 2005, was one of the most devastating natural disasters in modern U.S. history, causing widespread displacement and labor market disruptions. Using monthly employment data from 1990 to 2009, I construct a synthetic control from 273 unaffected metropolitan statistical areas that closely matches pre-Katrina New Orleans employment patterns. The TSSC algorithm selects Modified Synthetic Control with covariates (MSCc) as the optimal method based on pre-treatment fit. The analysis reveals catastrophic employment losses: an immediate 33% year-over-year decline following the hurricane, with an average treatment effect of -7.37 percentage points over 2005-2009. In-time placebo tests validate causality, showing no similar effect when treatment is artificially placed in 2003. This study contributes to disaster economics by analyzing aggregate MSA-level employment with a 15-year pre-treatment period, avoiding spatial aggregation bias and per capita measurement issues. Results indicate substantial but partially recovered employment impacts, with important implications for disaster recovery policy.
 
@@ -29,7 +50,6 @@ Vigdor (2008) documented that nearly half of evacuees had not returned by mid-20
 
 ## Contribution of This Study
 This paper contributes to disaster economics literatures in several specific ways that address gaps in prior research literatures. Unlike most prior studies on Hurricane Katrina that focus primarily on individual-level outcomes or use potentially problematic per capita measures, this analysis provides direct evidence on the labor market's aggregate capacity to recover from the disaster. The use of year-over-year employment growth rates avoids level-based measurement issues while capturing the dynamics of employment change. The 15-year pre-treatment period (1990-2004) improves counterfactual credibility and reduces overfitting concerns compared to shorter baseline periods.
-This paper contributes to the existing literature in three ways. First, it focuses on aggregate employment at the metropolitan level rather than per capita output measures, providing a clearer view of labor market recovery. Second, by using monthly employment data from 1990–2004, the analysis benefits from a longer pre-treatment window, reducing the risk of overfitting and improving the credibility of the counterfactual. Third, by focusing on employment—a direct and policy-relevant measure of resilience—this study complements prior work that emphasizes income or GDP growth.
 
 # Data and Methodology
 ## Data
@@ -41,47 +61,35 @@ The empirical strategy employs the Synthetic Control Method (SCM) developed by A
 $$ 
 \mathbf{w}^{\mathrm{SCM}} = \underset{\mathbf{w}^{\mathrm{SCM}} \in \mathcal{W}_{\mathrm{conv}}}{\operatorname*{argmin}} \; \left\| \mathbf{y}_1^{\mathcal{T}_1} - \mathbf{Y}_0^{\mathcal{T}_1} \mathbf{w}^{\mathrm{SCM}} \right\|_2^2,
 $$
-
 where $\mathcal{W}_{\mathrm{conv}} = \{\mathbf{w}^{\mathrm{SCM}} \in \mathbb{R}_{\ge 0}^{N_0} \mid \mathbf{1}^\top \mathbf{w} = 1\}$.
 
 ## The Two-Step Synthetic Control Method
 The Two-Step Synthetic Control (TSSC) method developed by Li and Shankar (2023) addresses a key challenge in synthetic control applications, which is how to choose among multiple synthetic control variants. Rather than imposing a single method choice, TSSC algorithmically selects the optimal approach, reducing researcher discretion and potential specification searching, thereby enhancing the credibility of results. In Step 1, the algorithm evaluates several approaches (standard synthetic control, modified synthetic control with covariates, and augmented synthetic control) and selects the method minimizing mean squared prediction error in the pre-treatment period. In my analysis, the algorithm selected Modified Synthetic Control with covariates (MSCc) based on superior pre-treatment fit (RMSE = 0.558, R-squared = 0.834), as shown in Table 1.In Step 2, the algorithm constructs a synthetic control as a weighted average of control MSAs. Formally, let Y_it denote year-over-year employment growth for unit i at time t. The synthetic control is defined as
 $$
 \hat{Y}_{1t}^{N} = \sum_{j=1}^{J} w_j \, Y_{j+1,t},
-$$
-where the weights $w_j$ are chosen to minimize the pre-treatment distance between New Orleans and the synthetic control, subject to non-negativity and unit-sum constraints:
+$$ where the weights $w_j$ are chosen to minimize the pre-treatment distance between New Orleans and the synthetic control, subject to non-negativity and unit-sum constraints:
 $$
 w_j \ge 0 \quad \text{for all } j, \qquad \sum_{j=1}^{J} w_j = 1.
 $$
-
 The treatment effect at each post-treatment time $t$ is
 $$
 \tau_{1t} = Y_{1t} - \hat{Y}_{1t}^{N}.
 $$
-
-The average treatment effect on the treated (ATT) over the post-treatment period is
-$$
-\text{ATT}
-= \frac{1}{T_{\text{post}}} \sum_{t = T_0 + 1}^{T} \tau_{1t},
-$$
-providing a summary measure of the overall impact.
+The average treatment effect on the treated (ATT) over the post-treatment period is $$
+\text{ATT} = \frac{1}{T_{\text{post}}} \sum_{t = T_0 + 1}^{T} \tau_{1t},$$ providing a summary measure of the overall impact.
 
 ## Identification
-
 The key assumption is that, absent Katrina, New Orleans employment would have evolved similarly to the synthetic control. This is plausible when pre-treatment fit is excellent, the intervention was unanticipated and unrelated to pre-existing trends, and no other contemporaneous shocks differentially affected the treated unit. Hurricane Katrina satisfies these conditions: the storm's timing was determined by meteorological factors, and excellent pre-treatment fit over 15 years demonstrates that the synthetic control successfully replicates New Orleans employment dynamics across multiple business cycles.
 
 To validate causality, I conduct an in-time placebo test by re-running the analysis with treatment artificially placed in January 2003. If the employment collapse is truly caused by Katrina, we should observe no effect at the fake treatment time, with the catastrophic impact appearing only at the actual hurricane date.
 
 # Results and Discussion
-
 ## Pre-Treatment Fit and Method Selection
-
 The Two-Step algorithm selected Modified Synthetic Control with covariates based on superior pre-treatment fit. Table 1 reports key diagnostics: pre-treatment RMSE of 0.558 and R-squared of 0.834, indicating that the MSCc method captured approximately 83% of variation in New Orleans employment growth before the hurricane. The post-treatment RMSE of 17.962 reflects the large treatment effect rather than poor model performance.
 
 Figure A2 (Appendix) displays the gap between actual New Orleans and synthetic control during 1990-2005, fluctuating tightly around zero throughout this 15-year window. This close pre-treatment match validates the identification assumption that the synthetic control provides a credible counterfactual for New Orleans.
 
 ## Main Results: Treatment Effects
-
 Figure 1 presents observed versus synthetic control employment growth over the full study period. During the pre-treatment period through August 2005, both series track closely with minimal divergence. At the hurricane timing, there is immediate catastrophic separation between the two lines.
 
 Figure 2 shows the treatment effect as the gap between observed and synthetic New Orleans employment growth. The immediate impact in late 2005 was severe, with employment growth collapsing to approximately -33% year-over-year. This represents one of the largest employment shocks to a U.S. metropolitan area in modern history, indicating that New Orleans lost roughly one-third of its employment base compared to the previous year.
@@ -89,7 +97,6 @@ Figure 2 shows the treatment effect as the gap between observed and synthetic Ne
 Following this catastrophic impact, employment growth began recovering. The gap narrowed substantially through 2006 and 2007, showing gradual convergence back toward the counterfactual. By the end of the study period in 2009, the gap had approached approximately -5%, indicating substantial but incomplete recovery. The average treatment effect on the treated over the entire post-treatment period (September 2005 through December 2009) is -7.37 percentage points.
 
 ## Validation Through In-Time Placebo Test
-
 Figure 3 presents results from the in-time placebo test, where treatment is artificially placed in January 2003, approximately 2.5 years before the actual hurricane. At the fake treatment time shown by the dashed vertical line, there is no systematic employment collapse. The actual New Orleans line continues tracking the synthetic control reasonably well through 2003 and 2004 with no catastrophic break at the placebo timing.
 
 However, at the actual Hurricane Katrina timing in late 2005, the massive employment collapse appears. This temporal specificity validates the causal interpretation. If the Two-Step Synthetic Control method were simply detecting spurious patterns or pre-existing differential trends, we would expect to observe similar treatment effects at the fake treatment time in 2003. The fact that the catastrophic impact appears only when and where the hurricane actually occurred demonstrates that Hurricane Katrina caused the employment losses rather than these losses reflecting methodological artifacts or continuation of pre-existing trends.
@@ -99,12 +106,10 @@ However, at the actual Hurricane Katrina timing in late 2005, the massive employ
 The results show that Hurricane Katrina caused catastrophic short-term employment losses in New Orleans, with an average treatment effect of 7.37 percentage points below the counterfactual between 2005 and 2009. Employment declined by roughly one third in the first year, making it one of the most severe labor market shocks experienced by any modern United States metropolitan area. For comparison, the worst point of the Great Recession saw national employment fall by about six percent, which highlights the extraordinary scale of the Katrina shock. Despite this dramatic initial impact, the long-run pattern in the results shows substantial recovery. The employment gap steadily narrowed from 2006 through 2008, and by 2009 growth rates were moving close to the synthetic control, although not fully matching it. This indicates that the regional economy, while deeply affected, demonstrated significant resilience and capacity for recovery over time. Several forces likely contributed to this rebound. Federal disaster assistance programs provided more than one hundred billion dollars in support that helped households and businesses rebuild. Reconstruction created a surge in construction employment that helped compensate for losses in other industries, and prior research confirms that construction activity even exceeded pre-Katrina levels during the peak rebuilding years. Population return also played a role, as homeowners, higher-income residents, and individuals with strong local ties were more likely to come back, which helped restore both the labor force and consumer demand. Businesses that survived adapted to the changing environment, and new firms entered the market to serve returning residents and support reconstruction activity.
 
 ## Limitations and Policy Implications
-
 Several limitations deserve consideration. Year-over-year growth rates differ from absolute employment levels. A return of growth rates to zero does not necessarily mean full recovery of pre-disaster employment levels if the level was permanently depressed. The study period ends in 2009, missing longer-term dynamics. The 2008-2009 Great Recession occurred during the post-treatment period, potentially confounding Katrina effects, though the synthetic control should account for common recession shocks. My aggregate analysis masks important heterogeneity across industries and demographics, with prior literature documenting that lower-income workers and minority populations faced greater barriers to return.
 The findings carry important policy implications. The substantial recovery suggests disaster assistance can be effective at facilitating labor market restoration, though recovery took several years, implying need for sustained rather than just immediate relief. Policies facilitating worker return including housing assistance appear crucial. Business support helped maintain employment relationships and generate opportunities. The catastrophic immediate impact underscores the importance of pre-disaster resilience investments in infrastructure and economic diversification. Finally, disaster recovery programs must address equity concerns, ensuring vulnerable populations receive adequate support rather than being permanently displaced.
 
 # Conclusion
-
 This paper uses the Two-Step Synthetic Control method to estimate Hurricane Katrina's causal impact on New Orleans employment. The analysis reveals catastrophic immediate employment losses of approximately -33% year-over-year following the hurricane, with substantial but incomplete recovery over the subsequent four years. In-time placebo tests validate the causal interpretation by showing no effect when treatment is artificially placed in 2003, with the catastrophic impact appearing only at the actual hurricane timing. This study advances disaster economics by analyzing aggregate MSA-level employment with a 15-year pre-treatment period, avoiding spatial aggregation bias and per capita measurement issues raised by recent methodological literature. The findings suggest that while catastrophic disasters cause severe short-term disruptions, substantial recovery is possible with sustained disaster assistance, business support, housing reconstruction, and workforce development programs. Future research should examine longer-term effects beyond 2009, disaggregate impacts by industry and demographics, and explore the mechanisms underlying successful recovery to inform more effective disaster policy design.
 
 \newpage
@@ -152,8 +157,6 @@ Yun, S. D., & Kim, B. (2022). Causal inference of ambiguous natural experiments 
 | Average Treatment Effect (ATT) | -7.37 pp |
 
 *Note: Diagnostics from Two-Step Synthetic Control algorithm. MSCc refers to Modified Synthetic Control with covariates. Higher post-treatment RMSE reflects large treatment effect. ATT is average treatment effect on the treated over September 2005 - December 2009.*
-
-\newpage
 
 ```{python}
 #| label: fig-observed
@@ -214,8 +217,6 @@ plt.show()
 
 *Note: Year-over-year percentage change in total non-farm employment. Blue solid line shows actual New Orleans; dashed line shows synthetic control. Vertical dotted line indicates Hurricane Katrina (August 2005).*
 
-\newpage
-
 ```{python}
 #| label: fig-treatment
 #| fig-cap: "Estimated Treatment Effect"
@@ -253,8 +254,6 @@ plt.show()
 ```
 
 *Note: Gap between observed and synthetic New Orleans employment growth (1990-2009). Negative values indicate employment losses relative to counterfactual. Red dashed line at zero. Vertical line indicates Hurricane Katrina (August 2005).*
-
-\newpage
 
 ```{python}
 #| label: fig-placebo
@@ -355,7 +354,6 @@ ax.spines['right'].set_visible(False)
 plt.tight_layout()
 plt.show()
 ```
-
 *Note: Gap between actual New Orleans employment growth and synthetic control during pre-treatment period (1990-2005). Gap fluctuates tightly around zero throughout 15-year baseline, validating the identification assumption.*
 
 
