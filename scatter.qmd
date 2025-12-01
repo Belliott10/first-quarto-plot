@@ -169,3 +169,10 @@ config = {
 Results = TSSC(config).fit()
 
 ```
+| Metric | Value |
+|--------|-------|
+| Pre-treatment RMSE | 0.558 |
+| R-squared | 0.834 |
+| Post-treatment RMSE | 17.962 |
+| Method Selected | MSCc |
+| Average Treatment Effect (ATT) | -7.37 pp |
