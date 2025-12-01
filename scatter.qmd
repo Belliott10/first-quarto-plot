@@ -146,32 +146,15 @@ Yun, S. D., & Kim, B. (2022). Causal inference of ambiguous natural experiments 
 
 # Tables and Figures
 
-```{python}
-#| label: tbl-diagnostics
-#| tbl-cap: "Model Fit Diagnostics"
+**Table 1: Model Fit Diagnostics**
 
-import pandas as pd
-
-table_data = {
-    'Metric': [
-        'Pre-treatment RMSE',
-        'R-squared',
-        'Post-treatment RMSE',
-        'Method Selected',
-        'Average Treatment Effect (ATT)'
-    ],
-    'Value': [
-        '0.558',
-        '0.834',
-        '17.962',
-        'MSCc',
-        '-7.37 pp'
-    ]
-}
-
-df_table = pd.DataFrame(table_data)
-print(df_table.to_markdown(index=False))
-```
+| Metric | Value |
+|--------|-------|
+| Pre-treatment RMSE | 0.558 |
+| R-squared | 0.834 |
+| Post-treatment RMSE | 17.962 |
+| Method Selected | MSCc |
+| Average Treatment Effect (ATT) | -7.37 pp |
 
 *Note: Diagnostics from Two-Step Synthetic Control algorithm. MSCc refers to Modified Synthetic Control with covariates. Higher post-treatment RMSE reflects large treatment effect. ATT is average treatment effect on the treated over September 2005 - December 2009.*
 
