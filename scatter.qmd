@@ -1,6 +1,9 @@
 ---
 title: ""
-format: 
+
+latex-input: true   # <-- ADD THIS LINE
+
+format:
   pdf:
     documentclass: article
     fontsize: 12pt
@@ -19,6 +22,7 @@ execute:
   warning: false
   message: false
 ---
+
 
 \begin{titlepage}
 \begin{center}
