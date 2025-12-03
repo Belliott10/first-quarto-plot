@@ -1,21 +1,18 @@
 ---
 title: ""
 
-latex-input: true   # <-- ADD THIS LINE
-
 format:
   pdf:
     documentclass: article
     fontsize: 12pt
     geometry: margin=1in
     linestretch: 1.75
-    pdf-engine: pdflatex
+    pdf-engine: xelatex
     keep-tex: true
-    include-in-header: |
-      \usepackage[utf8]{inputenc}
-      \usepackage{parskip}
-      \setlength{\parindent}{0pt}
-      \DeclareUnicodeCharacter{2212}{-}
+
+header-includes: |
+  \usepackage{parskip}      % removes paragraph indentation
+  \setlength{\parindent}{0pt}
 
 execute:
   echo: false
@@ -45,7 +42,6 @@ Georgia State University\\[1.5cm]
 
 \end{center}
 \end{titlepage}
-
 
 
 # Abstract
