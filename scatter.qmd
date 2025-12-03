@@ -12,7 +12,7 @@ format:
     pdf-engine: pdflatex
     include-in-header: |
       \usepackage{parskip}      % removes big paragraph spacing
-  \setlength{\parindent}{0pt}   % removes unwanted indentation
+      \setlength{\parindent}{0pt}   % removes unwanted indentation
 execute:
   echo: false
   warning: false
