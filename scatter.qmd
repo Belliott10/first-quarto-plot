@@ -7,7 +7,7 @@ format:
     fontsize: 12pt
     geometry: verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in
     include-in-header: prelim.tex
-    linestretch: 1.5 
+    linestretch: 1.8 
     keep-tex: true
     cite-method: natbib
     pdf-engine: pdflatex
