@@ -7,7 +7,7 @@ format:
     fontsize: 12pt
     geometry: verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in
     include-in-header: prelim.tex
-    linestretch: 2 
+    linestretch: 1.5 
     keep-tex: true
     cite-method: natbib
     pdf-engine: pdflatex
@@ -262,9 +262,9 @@ plt.title("Estimated Treatment Effect — Hurricane Katrina", fontsize=16)
 plt.tight_layout()
 plt.show()
 ```
-\newpage
+*Note: Gap between observed and synthetic New Orleans employment growth (1990-2009). Negative values indicate employment losses relative to counterfactual. Red dashed line at zero. Vertical line indicates Hurricane Katrina (August 2005).
 
-*Note: Gap between observed and synthetic New Orleans employment growth (1990-2009). Negative values indicate employment losses relative to counterfactual. Red dashed line at zero. Vertical line indicates Hurricane Katrina (August 2005).*
+\newpage
 
 ```{python}
 #| label: fig-placebo
