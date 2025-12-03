@@ -11,9 +11,9 @@ format:
     cite-method: natbib
     pdf-engine: pdflatex
     include-in-header: |
-  \usepackage[utf8]{inputenc}
-  \usepackage{parskip}      % removes big paragraph spacing
-  \setlength{\parindent}{0pt}   % removes unwanted indentation
+      \usepackage[utf8]{inputenc}
+       \usepackage{parskip}   
+       \setlength{\parindent}{0pt}  
 
 execute:
   echo: false
