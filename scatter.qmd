@@ -11,8 +11,8 @@ format:
     cite-method: natbib
     pdf-engine: pdflatex
     include-in-header: |
-      \usepackage{parskip}          % removes big paragraph spacing
-      \setlength{\parindent}{0pt}   % removes unwanted indentation
+      \usepackage{parskip}      % removes big paragraph spacing
+  \setlength{\parindent}{0pt}   % removes unwanted indentation
 execute:
   echo: false
   warning: false
@@ -376,6 +376,7 @@ plt.show()
 
 
 \newpage
+
 # Appendix A: Code {.unnumbered}
 
 The following code was used to generate all empirical results and figures in the paper.
@@ -445,9 +446,6 @@ plt.tight_layout()
 plt.show()
 ```
 
-*Note: Year-over-year percentage change in total non-farm employment. The black solid line shows actual employment for New Orleans–Metairie, LA MSA, while the red solid line shows the synthetic control (MSCc). The vertical gray dotted line indicates the timing of Hurricane Katrina (August 2005).*
-
-
 ```{python}
 #| echo: true
 #| eval: false
@@ -458,7 +456,8 @@ plt.show()
 #| fig-width: 10
 #| fig-height: 6
 
-gap = y_obs - y_cf
+# FIX: ensure numeric array
+gap = (y_obs - y_cf).astype(float).to_numpy()
 
 fig, ax = plt.subplots(figsize=(10, 6))
 ax.plot(full_index, gap, color="black", linewidth=2.5, label="Treatment Effect (Observed − Synthetic)")
@@ -474,7 +473,7 @@ ax.spines['right'].set_visible(False)
 
 # FIX: Convert to scalar
 peak_idx = np.argmin(gap)
-peak_value = float(gap[peak_idx])  # Convert to Python float
+peak_value = (gap[peak_idx])  # Converted to float
 peak_date = full_index[peak_idx]
 
 ax.annotate(f'Peak: {peak_value:.1f}pp', 
@@ -488,8 +487,6 @@ plt.title("Estimated Treatment Effect — Hurricane Katrina", fontsize=16)
 plt.tight_layout()
 plt.show()
 ```
-*Note: Gap between observed and synthetic New Orleans employment growth (1990-2009). Negative values indicate employment losses relative to counterfactual. Red dashed line at zero. Vertical line indicates Hurricane Katrina (August 2005).
-
 
 ```{python}
 #| echo: true
@@ -543,9 +540,6 @@ plt.tight_layout()
 plt.show()
 ```
 
-*Note: Validation test with placebo treatment placed in 2003 (dashed vertical line). Gap shows no systematic collapse at placebo timing, with catastrophic impact appearing only at actual hurricane time in 2005.*
-
-
 \appendix
 \renewcommand{\thefigure}{A\arabic{figure}}
 \setcounter{figure}{0}
@@ -576,10 +570,6 @@ config_diagplot = {
 sc_diagplot([config_diagplot])
 ```
 
-*Note: New Orleans (black line) versus simple average of 273 donor MSAs (blue line). Gray lines show individual donor pool MSAs. Vertical dashed line indicates Hurricane Katrina (August 2005).*
-
-\newpage
-
 ```{python}
 #| echo: true
 #| eval: false
@@ -607,7 +597,6 @@ ax.spines['right'].set_visible(False)
 plt.tight_layout()
 plt.show()
 ```
-*Note: Gap between actual New Orleans employment growth and synthetic control during pre-treatment period (1990-2005). Gap fluctuates tightly around zero throughout 15-year baseline, validating the identification assumption.*
 
 
 
