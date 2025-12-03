@@ -11,8 +11,10 @@ format:
     cite-method: natbib
     pdf-engine: pdflatex
     include-in-header: |
-      \usepackage{parskip}      % removes big paragraph spacing
-      \setlength{\parindent}{0pt}   % removes unwanted indentation
+  \usepackage[utf8]{inputenc}
+  \usepackage{parskip}      % removes big paragraph spacing
+  \setlength{\parindent}{0pt}   % removes unwanted indentation
+
 execute:
   echo: false
   warning: false
@@ -239,7 +241,7 @@ plt.show()
 gap = y_obs - y_cf
 
 fig, ax = plt.subplots(figsize=(10, 6))
-ax.plot(full_index, gap, color="black", linewidth=2.5, label="Treatment Effect (Observed − Synthetic)")
+ax.plot(full_index, gap, color="black", linewidth=2.5, label="Treatment Effect (Observed - Synthetic)")
 ax.axhline(0, color="red", linestyle="--", linewidth=1.5, alpha=0.7)
 ax.axvline(x=pd.to_datetime(split_date), color="gray", linestyle=":", linewidth=2, 
            label="Hurricane Katrina (Aug 2005)")
