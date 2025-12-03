@@ -5,14 +5,18 @@ format:
   pdf:
     documentclass: article
     fontsize: 12pt
-    geometry: verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in
-    include-in-header: prelim.tex
-    linestretch: 1.8 
+    geometry: margin=1in
+    linestretch: 1.75
     keep-tex: true
     cite-method: natbib
     pdf-engine: pdflatex
+    include-in-header: |
+      \usepackage{parskip}          % removes big paragraph spacing
+      \setlength{\parindent}{0pt}   % removes unwanted indentation
 execute:
   echo: false
+  warning: false
+  message: false
 ---
 
 \begin{titlepage}
@@ -369,5 +373,241 @@ plt.tight_layout()
 plt.show()
 ```
 *Note: Gap between actual New Orleans employment growth and synthetic control during pre-treatment period (1990-2005). Gap fluctuates tightly around zero throughout 15-year baseline, validating the identification assumption.*
+
+
+\newpage
+# Appendix A: Code {.unnumbered}
+
+The following code was used to generate all empirical results and figures in the paper.
+
+
+```{python}
+#| echo: true
+#| eval: false
+
+## Python script used to generate the causal impact figure
+
+#| label: fig-observed
+#| fig-cap: "Observed vs Synthetic Control"
+#| fig-width: 10
+#| fig-height: 6
+
+import pandas as pd
+import numpy as np
+from mlsynth import TSSC
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("Total_Non_Farm_Employment_Katrina.csv")
+
+config = {
+    "df": df,
+    "outcome": "YoY_NFE",
+    "treat": "Katrina",
+    "unitid": "MSA Title",
+    "time": "time",
+    "display_graphs": False,
+    "save": False,
+    "counterfactual_color": ["red", "blue"]
+}
+
+Results = TSSC(config).fit()
+y_obs = Results[3].raw_results['Vectors']['Observed Unit']
+y_cf = Results[3].raw_results['Vectors']['Counterfactual']
+post_periods = Results[3].raw_results['Fit']['Post-Periods']
+pre_periods = Results[3].raw_results['Fit']['Pre-Periods']
+
+split_date = "2005-08"
+pre_index = pd.date_range(
+    end=pd.Period(split_date, freq="M").start_time - pd.offsets.MonthEnd(1),
+    periods=pre_periods,
+    freq="M"
+)
+post_index = pd.date_range(
+    start=pd.Period(split_date, freq="M").start_time,
+    periods=post_periods,
+    freq="M"
+)
+full_index = pre_index.append(post_index)
+
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.plot(full_index, y_obs, label="New Orleans-Metairie, LA MSA (Observed)", linewidth=2.5, color='black')
+ax.plot(full_index, y_cf, label="Synthetic Control MSCc (Recommended)", linewidth=2.5, color='red')
+ax.axvline(x=pd.to_datetime(split_date), color="gray", linestyle=":", linewidth=2, 
+           label="Hurricane Katrina (Aug 2005)")
+ax.set_xlabel("Date", fontsize=11)
+ax.set_ylabel("Year-over-Year Employment Growth (%)", fontsize=11)
+ax.legend(fontsize=10)
+ax.grid(alpha=0.3)
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+plt.title("Causal Impact on YoY_NFE", fontsize=16, weight="bold")
+plt.tight_layout()
+plt.show()
+```
+
+*Note: Year-over-year percentage change in total non-farm employment. The black solid line shows actual employment for New Orleans–Metairie, LA MSA, while the red solid line shows the synthetic control (MSCc). The vertical gray dotted line indicates the timing of Hurricane Katrina (August 2005).*
+
+
+```{python}
+#| echo: true
+#| eval: false
+
+## Python script generating the treatment effect figure
+#| label: fig-treatment
+#| fig-cap: "Estimated Treatment Effect"
+#| fig-width: 10
+#| fig-height: 6
+
+gap = y_obs - y_cf
+
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.plot(full_index, gap, color="black", linewidth=2.5, label="Treatment Effect (Observed − Synthetic)")
+ax.axhline(0, color="red", linestyle="--", linewidth=1.5, alpha=0.7)
+ax.axvline(x=pd.to_datetime(split_date), color="gray", linestyle=":", linewidth=2, 
+           label="Hurricane Katrina (Aug 2005)")
+ax.set_xlabel("Date", fontsize=11)
+ax.set_ylabel("Gap (Percentage Points)", fontsize=11)
+ax.legend(fontsize=10)
+ax.grid(alpha=0.3)
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+
+# FIX: Convert to scalar
+peak_idx = np.argmin(gap)
+peak_value = float(gap[peak_idx])  # Convert to Python float
+peak_date = full_index[peak_idx]
+
+ax.annotate(f'Peak: {peak_value:.1f}pp', 
+            xy=(peak_date, peak_value),
+            xytext=(peak_date, peak_value - 8),
+            fontsize=9, ha='center',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='yellow', alpha=0.3),
+            arrowprops=dict(arrowstyle='->', connectionstyle='arc3,rad=0'))
+
+plt.title("Estimated Treatment Effect — Hurricane Katrina", fontsize=16)
+plt.tight_layout()
+plt.show()
+```
+*Note: Gap between observed and synthetic New Orleans employment growth (1990-2009). Negative values indicate employment losses relative to counterfactual. Red dashed line at zero. Vertical line indicates Hurricane Katrina (August 2005).
+
+
+```{python}
+#| echo: true
+#| eval: false
+
+## Python code generating the in-time placebo figure
+
+#| label: fig-placebo
+#| fig-cap: "In-Time Placebo Test"
+#| fig-width: 10
+#| fig-height: 6
+
+df_placebo = pd.read_csv("Total_Non_Farm_Employment_Katrina.csv")
+df_placebo["date"] = pd.to_datetime(df_placebo["date"])
+
+placebo_date = "2003-08-31"
+treated_unit = "New Orleans-Metairie, LA MSA"
+df_placebo["Katrina"] = np.where(
+    (df_placebo["MSA Title"] == treated_unit) & (df_placebo["date"] >= placebo_date),
+    1, 0
+)
+
+config_placebo = {
+    "df": df_placebo,
+    "outcome": "YoY_NFE",
+    "treat": "Katrina",
+    "unitid": "MSA Title",
+    "time": "time",
+    "display_graphs": False,
+    "save": False,
+}
+Results_placebo = TSSC(config_placebo).fit()
+y_cf_placebo = Results_placebo[3].raw_results['Vectors']['Counterfactual']
+
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.plot(full_index, y_obs, color="black", linewidth=2.5, label="Observed (New Orleans)")
+ax.plot(full_index, y_cf_placebo, color="red", linestyle="--", linewidth=2.5, 
+        label="Synthetic Control (Placebo)")
+ax.axvline(x=pd.to_datetime("2003-08"), color="blue", linestyle="--", linewidth=2, 
+           label="Placebo Treatment (Aug 2003)")
+ax.axvline(x=pd.to_datetime(split_date), color="gray", linestyle=":", linewidth=2, 
+           label="Actual Hurricane (Aug 2005)")
+ax.set_xlabel("Date", fontsize=11)
+ax.set_ylabel("Year-over-Year Employment Growth (%)", fontsize=11)
+ax.legend(fontsize=9, loc='best')
+ax.grid(alpha=0.3)
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+plt.title("Causal Impact on YoY_NFE", fontsize=16, weight="bold")
+plt.tight_layout()
+plt.show()
+```
+
+*Note: Validation test with placebo treatment placed in 2003 (dashed vertical line). Gap shows no systematic collapse at placebo timing, with catastrophic impact appearing only at actual hurricane time in 2005.*
+
+
+\appendix
+\renewcommand{\thefigure}{A\arabic{figure}}
+\setcounter{figure}{0}
+# Appendix {.unnumbered}
+
+```{python}
+#| echo: true
+#| eval: false
+
+## Python script for naive comparison (New Orleans vs donor mean)
+
+#| label: fig-naive
+#| fig-cap: "Naive Comparison - New Orleans vs Donor Pool Average"
+#| fig-width: 10
+#| fig-height: 6
+
+from mlsynth.utils.helperutils import sc_diagplot
+
+config_diagplot = {
+    "df": df,
+    "outcome": "YoY_NFE",
+    "treat": "Katrina",
+    "unitid": "MSA Title",
+    "time": "time",
+    "display_graphs": True,
+    "save": False,
+}
+sc_diagplot([config_diagplot])
+```
+
+*Note: New Orleans (black line) versus simple average of 273 donor MSAs (blue line). Gray lines show individual donor pool MSAs. Vertical dashed line indicates Hurricane Katrina (August 2005).*
+
+\newpage
+
+```{python}
+#| echo: true
+#| eval: false
+
+## Python code for pre-treatment validation figure
+
+#| label: fig-pretreatment
+#| fig-cap: "Pre-Treatment Fit Validation"
+#| fig-width: 10
+#| fig-height: 6
+
+pre_gap = gap[:pre_periods]
+pre_dates = full_index[:pre_periods]
+
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.plot(pre_dates, pre_gap, color="black", linewidth=2.5, label="Gap (Pre-Treatment)")
+ax.axhline(0, color="red", linestyle="--", linewidth=1.5, alpha=0.7)
+ax.set_xlabel("Date", fontsize=11)
+ax.set_ylabel("Gap (Percentage Points)", fontsize=11)
+ax.set_title("Pre-Treatment Fit Validation (1990-2005)", fontsize=13, fontweight='bold')
+ax.legend(fontsize=10)
+ax.grid(alpha=0.3)
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+plt.tight_layout()
+plt.show()
+```
+*Note: Gap between actual New Orleans employment growth and synthetic control during pre-treatment period (1990-2005). Gap fluctuates tightly around zero throughout 15-year baseline, validating the identification assumption.*
+
 
 
