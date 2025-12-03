@@ -1,19 +1,17 @@
 ---
-title: ""
-author: ""
 format: 
   pdf:
     documentclass: article
     fontsize: 12pt
     geometry: margin=1in
     linestretch: 1.75
-    keep-tex: true
-    cite-method: natbib
     pdf-engine: pdflatex
+    keep-tex: true
     include-in-header: |
       \usepackage[utf8]{inputenc}
-       \usepackage{parskip}   
-       \setlength{\parindent}{0pt}  
+      \usepackage{parskip}
+      \setlength{\parindent}{0pt}
+      \DeclareUnicodeCharacter{2212}{-}
 
 execute:
   echo: false
