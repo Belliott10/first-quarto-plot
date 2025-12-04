@@ -24,9 +24,9 @@ execute:
 \begin{titlepage}
 \begin{center}
 
-\vspace*{3cm}
+\vspace*{2cm}
 
-{\LARGE \textbf{The Economic Impact of Hurricane Katrina on Local Employment: \\[0.2cm]
+{\LARGE \textbf{The Economic Impact of Hurricane Katrina on Local Employment: \\
 A Synthetic Control Approach}}
 
 \vspace{2cm}
@@ -70,7 +70,6 @@ $$
 \mathbf{w}^{\mathrm{SCM}} = \underset{\mathbf{w}^{\mathrm{SCM}} \in \mathcal{W}_{\mathrm{conv}}}{\operatorname*{argmin}} \; \left\| \mathbf{y}_1^{\mathcal{T}_1} - \mathbf{Y}_0^{\mathcal{T}_1} \mathbf{w}^{\mathrm{SCM}} \right\|_2^2,
 $$
 where $\mathcal{W}_{\mathrm{conv}} = \{\mathbf{w}^{\mathrm{SCM}} \in \mathbb{R}_{\ge 0}^{N_0} \mid \mathbf{1}^\top \mathbf{w} = 1\}$.
-
 ## The Two-Step Synthetic Control Method
 The Two-Step Synthetic Control (TSSC) method developed by Li and Shankar (2023) addresses a key challenge in synthetic control applications, which is how to choose among multiple synthetic control variants. Rather than imposing a single method choice, TSSC algorithmically selects the optimal approach, reducing researcher discretion and potential specification searching, thereby enhancing the credibility of results. In Step 1, the algorithm evaluates several approaches (standard synthetic control, modified synthetic control with covariates, and augmented synthetic control) and selects the method minimizing mean squared prediction error in the pre-treatment period. In my analysis, the algorithm selected Modified Synthetic Control with covariates (MSCc) based on superior pre-treatment fit (RMSE = 0.558, R-squared = 0.834), as shown in Table 1.In Step 2, the algorithm constructs a synthetic control as a weighted average of control MSAs. Formally, let Y_it denote year-over-year employment growth for unit i at time t. The synthetic control is defined as
 $$
@@ -78,8 +77,7 @@ $$
 $$ where the weights $w_j$ are chosen to minimize the pre-treatment distance between New Orleans and the synthetic control, subject to non-negativity and unit-sum constraints:
 $$
 w_j \ge 0 \quad \text{for all } j, \qquad \sum_{j=1}^{J} w_j = 1.
-$$
-The treatment effect at each post-treatment time $t$ is
+$$ The treatment effect at each post-treatment time $t$ is
 $$
 \tau_{1t} = Y_{1t} - \hat{Y}_{1t}^{N}.
 $$
@@ -123,7 +121,6 @@ This paper uses the Two-Step Synthetic Control method to estimate Hurricane Katr
 \newpage
 
 # References
-
 Abadie, A. (2021). Using synthetic controls: Feasibility, data requirements, and methodological aspects. *Journal of Economic Literature*, 59(2), 391-425.
 
 Abadie, A., Diamond, A., & Hainmueller, J. (2010). Synthetic control methods for comparative case studies: Estimating the effect of California's tobacco control program. *Journal of the American Statistical Association*, 105(490), 493-505.
@@ -386,6 +383,7 @@ The following code was used to generate all empirical results and figures in the
 ```{python}
 #| echo: true
 #| eval: false
+#| wrap: true
 
 ## Python script used to generate the causal impact figure
 
@@ -492,6 +490,7 @@ plt.show()
 ```{python}
 #| echo: true
 #| eval: false
+#| wrap: true
 
 ## Python code generating the in-time placebo figure
 
@@ -549,6 +548,7 @@ plt.show()
 ```{python}
 #| echo: true
 #| eval: false
+#| wrap: true
 
 ## Python script for naive comparison (New Orleans vs donor mean)
 
@@ -574,6 +574,7 @@ sc_diagplot([config_diagplot])
 ```{python}
 #| echo: true
 #| eval: false
+#| wrap: true
 
 ## Python code for pre-treatment validation figure
 
