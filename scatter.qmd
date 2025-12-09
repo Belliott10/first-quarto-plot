@@ -68,21 +68,12 @@ The treated unit is the New Orleans–Metairie MSA, which was directly and sever
 The empirical strategy employs the Synthetic Control Method (SCM) developed by Abadie and Gardeazabal (2003) and extended by Abadie, Diamond, and Hainmueller (2010). SCM estimates the causal impact of an intervention by constructing a weighted combination of control units that best approximates the pre-treatment characteristics of the treated unit. The synthetic control finds the weight vector w that minimizes the distance between New Orleans and the weighted average of donor MSAs in the pre-treatment period:
 $$ 
 \mathbf{w}^{\mathrm{SCM}} = \underset{\mathbf{w}^{\mathrm{SCM}} \in \mathcal{W}_{\mathrm{conv}}}{\operatorname*{argmin}} \; \left\| \mathbf{y}_1^{\mathcal{T}_1} - \mathbf{Y}_0^{\mathcal{T}_1} \mathbf{w}^{\mathrm{SCM}} \right\|_2^2,
-$$
-where $\mathcal{W}_{\mathrm{conv}} = \{\mathbf{w}^{\mathrm{SCM}} \in \mathbb{R}_{\ge 0}^{N_0} \mid \mathbf{1}^\top \mathbf{w} = 1\}$.
+$$ where $\mathcal{W}_{\mathrm{conv}} = \{\mathbf{w}^{\mathrm{SCM}} \in \mathbb{R}_{\ge 0}^{N_0} \mid \mathbf{1}^\top \mathbf{w} = 1\}$.
+
 ## The Two-Step Synthetic Control Method
-The Two-Step Synthetic Control (TSSC) method developed by Li and Shankar (2023) addresses a key challenge in synthetic control applications, which is how to choose among multiple synthetic control variants. Rather than imposing a single method choice, TSSC algorithmically selects the optimal approach, reducing researcher discretion and potential specification searching, thereby enhancing the credibility of results. In Step 1, the algorithm evaluates several approaches (standard synthetic control, modified synthetic control with covariates, and augmented synthetic control) and selects the method minimizing mean squared prediction error in the pre-treatment period. In my analysis, the algorithm selected Modified Synthetic Control with covariates (MSCc) based on superior pre-treatment fit (RMSE = 0.558, R-squared = 0.834), as shown in Table 1.In Step 2, the algorithm constructs a synthetic control as a weighted average of control MSAs. Formally, let Y_it denote year-over-year employment growth for unit i at time t. The synthetic control is defined as
-$$
-\hat{Y}_{1t}^{N} = \sum_{j=1}^{J} w_j \, Y_{j+1,t},
-$$ where the weights $w_j$ are chosen to minimize the pre-treatment distance between New Orleans and the synthetic control, subject to non-negativity and unit-sum constraints:
-$$
-w_j \ge 0 \quad \text{for all } j, \qquad \sum_{j=1}^{J} w_j = 1.
-$$ The treatment effect at each post-treatment time $t$ is
-$$
-\tau_{1t} = Y_{1t} - \hat{Y}_{1t}^{N}.
-$$
-The average treatment effect on the treated (ATT) over the post-treatment period is $$
-\text{ATT} = \frac{1}{T_{\text{post}}} \sum_{t = T_0 + 1}^{T} \tau_{1t},$$ providing a summary measure of the overall impact.
+The Two-Step Synthetic Control (TSSC) method developed by Li and Shankar (2023) addresses how to select among multiple synthetic control estimators to balance reducing bias and increasing efficiency. The standard SC method imposes three restrictions: (1) zero intercept, (2) weights sum to one, and (3) non-negative weights. Modified Synthetic Control (MSC) methods relax some restrictions. MSC(a) relaxes restriction (1), MSC(b) relaxes restriction (2), and MSC(c) relaxes both (1) and (2), retaining only non-negativity.
+The TSSC approach comprises two steps. In Step 1, the algorithm tests whether the SC pretrends assumption holds by testing restrictions (1) and (2). If these restrictions are violated, a more flexible MSC method is recommended to reduce bias. If restrictions hold, the more efficient SC method is used. In Step 2, the algorithm applies the selected method. In my analysis, the algorithm selected MSC(c) based on superior pre-treatment fit (RMSE = 0.558, R-squared = 0.834), indicating both restrictions were violated.
+The synthetic control is constructed as: $\hat{Y}_{1t}^{N} = \sum_{j=2}^{N} w_j Y_{jt}$, where weights minimize pre-treatment distance. For MSC(c), only $w_j \ge 0$ is imposed. The treatment effect is $\tau_{1t} = Y_{1t} - \hat{Y}_{1t}^{N}$, and the average treatment effect on the treated is: $\text{ATT} = \frac{1}{T_{\text{post}}} \sum_{t = T_0 + 1}^{T} \tau_{1t}$.
 
 ## Identification
 The key assumption is that, absent Katrina, New Orleans employment would have evolved similarly to the synthetic control. This is plausible when pre-treatment fit is excellent, the intervention was unanticipated and unrelated to pre-existing trends, and no other contemporaneous shocks differentially affected the treated unit. Hurricane Katrina satisfies these conditions: the storm's timing was determined by meteorological factors, and excellent pre-treatment fit over 15 years demonstrates that the synthetic control successfully replicates New Orleans employment dynamics across multiple business cycles.
