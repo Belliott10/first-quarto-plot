@@ -7,7 +7,6 @@ format:
     fontsize: 12pt
     geometry: margin=1in
     linestretch: 1.75
-    pdf-engine: pdflatex
     pdf-engine: xelatex
     keep-tex: true
 
