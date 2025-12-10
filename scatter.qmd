@@ -6,7 +6,7 @@ format:
     documentclass: article
     fontsize: 12pt
     geometry: margin=1in
-    linestretch: 1.75
+    linestretch: 2
     pdf-engine: xelatex
     keep-tex: true
 
@@ -26,7 +26,8 @@ execute:
 
 \vspace*{2cm}
 
-{\LARGE \textbf{The Economic Impact of Hurricane Katrina on Local Employment: \\
+{\LARGE \textbf{The Economic Impact of Hurricane Katrina on Local Employment:
+
 A Synthetic Control Approach}}
 
 \vspace{2cm}
@@ -45,7 +46,7 @@ Georgia State University\\[1.5cm]
 
 
 # Abstract
-This paper examines the causal impact of Hurricane Katrina on employment in the New Orleans metropolitan area using the Two-Step Synthetic Control (TSSC) method. Hurricane Katrina, which struck the Gulf Coast in August 2005, was one of the most devastating natural disasters in modern U.S. history, causing widespread displacement and labor market disruptions. Using monthly employment data from 1990 to 2009, I construct a synthetic control from 273 unaffected metropolitan statistical areas that closely matches pre-Katrina New Orleans employment patterns. The TSSC algorithm selects Modified Synthetic Control with covariates (MSCc) as the optimal method based on pre-treatment fit. The analysis reveals catastrophic employment losses: an immediate 33% year-over-year decline following the hurricane, with an average treatment effect of -7.37 percentage points over 2005-2009. In-time placebo tests validate causality, showing no similar effect when treatment is artificially placed in 2003. This study contributes to disaster economics by analyzing aggregate MSA-level employment with a 15-year pre-treatment period, avoiding spatial aggregation bias and per capita measurement issues. Results indicate substantial but partially recovered employment impacts, with important implications for disaster recovery policy.
+This paper examines the causal impact of Hurricane Katrina on employment in the New Orleans metropolitan area using the Two-Step Synthetic Control (TSSC) method. Hurricane Katrina, which struck the Gulf Coast in August 2005, was one of the most devastating natural disasters in modern U.S. history, causing widespread displacement and labor market disruptions. Using monthly employment data from 1990 to 2009, I construct a synthetic control from 273 unaffected metropolitan statistical areas that closely matches pre-Katrina New Orleans employment patterns. The TSSC algorithm selects the MSC(c) method as optimal based on pre-treatment fit. The analysis reveals catastrophic employment losses: an immediate 33% year-over-year decline following the hurricane, with an average treatment effect of -7.37 percentage points over 2005-2009. In-time placebo tests validate causality, showing no similar effect when treatment is artificially placed in 2003. This study contributes to disaster economics by analyzing aggregate MSA-level employment with a 15-year pre-treatment period, avoiding spatial aggregation bias and per capita measurement issues. Results indicate substantial but partially recovered employment impacts, with important implications for disaster recovery policy.
 
 # Introduction
 On August 29, 2005, Hurricane Katrina made landfall on the Gulf Coast, unleashing catastrophic destruction across Louisiana, Mississippi, and Alabama. The storm's impact on New Orleans was particularly severe: levee failures led to flooding of approximately 80% of the city, displacing over 400,000 residents and causing an estimated $160 billion in damages (Vigdor, 2008). Beyond the immediate human toll, the hurricane precipitated one of the largest internal migration events in modern U.S. history and fundamentally disrupted the region's economic structure. This paper addresses a fundamental policy question: What was the causal impact of Hurricane Katrina on total non-farm employment in the New Orleans metropolitan area? Specifically, did employment in the region recover, stabilize, or suffer persistent losses relative to a counterfactual scenario where Katrina never occurred? 
@@ -82,7 +83,7 @@ To validate causality, I conduct an in-time placebo test by re-running the analy
 
 # Results and Discussion
 ## Pre-Treatment Fit and Method Selection
-The Two-Step algorithm selected Modified Synthetic Control with covariates based on superior pre-treatment fit. Table 1 reports key diagnostics: pre-treatment RMSE of 0.558 and R-squared of 0.834, indicating that the MSCc method captured approximately 83% of variation in New Orleans employment growth before the hurricane. The post-treatment RMSE of 17.962 reflects the large treatment effect rather than poor model performance.
+The Two-Step algorithm selected the Modified Synthetic Control MSC(c) method based on superior pre-treatment fit. Table 1 reports key diagnostics: pre-treatment RMSE of 0.558 and R-squared of 0.834, showing that the MSC(c) method captured approximately 83% of variation in New Orleans employment growth before the hurricane. The post-treatment RMSE of 17.962 reflects the large treatment effect rather than poor model performance.
 
 Figure A2 (Appendix) displays the gap between actual New Orleans and synthetic control during 1990-2005, fluctuating tightly around zero throughout this 15-year window. This close pre-treatment match validates the identification assumption that the synthetic control provides a credible counterfactual for New Orleans.
 
@@ -118,12 +119,6 @@ Abadie, A., Diamond, A., & Hainmueller, J. (2010). Synthetic control methods for
 
 Abadie, A., & Gardeazabal, J. (2003). The economic costs of conflict: A case study of the Basque Country. *American Economic Review*, 93(1), 113-132.
 
-Barone, G., & Mocetti, S. (2014). Natural disasters, growth and institutions: A tale of two earthquakes. *Journal of Urban Economics*, 84, 52-66.
-
-Cavallo, E., Galiani, S., Noy, I., & Pantano, J. (2013). Catastrophic natural disasters and economic growth. *Review of Economics and Statistics*, 95(5), 1549-1561.
-
-Coffman, M., & Noy, I. (2012). Hurricane Iniki: Measuring the long-term economic impact of a natural disaster using synthetic control. *Environment and Development Economics*, 17(2), 187-205.
-
 Deryugina, T., Kawano, L., & Levitt, S. (2018). The economic impact of Hurricane Katrina on its victims: Evidence from individual tax returns. *American Economic Journal: Applied Economics*, 10(2), 202-233.
 
 Groen, J. A., Kutzbach, M. J., & Polivka, A. E. (2020). Storms and jobs: The effect of hurricanes on individuals' employment and earnings over the long term. *Journal of Labor Economics*, 38(3), 653-685.
@@ -152,7 +147,9 @@ Yun, S. D., & Kim, B. (2022). Causal inference of ambiguous natural experiments 
 | Method Selected | MSCc |
 | Average Treatment Effect (ATT) | -7.37 pp |
 
-*Note: Diagnostics from Two-Step Synthetic Control algorithm. MSCc refers to Modified Synthetic Control with covariates. Higher post-treatment RMSE reflects large treatment effect. ATT is average treatment effect on the treated over September 2005 - December 2009.*
+*Note: Diagnostics from Two-Step Synthetic Control algorithm. MSC(c) refers to Modified Synthetic Control method that relaxes both the zero-intercept and weights-sum-to-one restrictions, retaining only the non-negativity constraint. The algorithm selected MSC(c) based on superior pre-treatment fit, indicating that the standard SC restrictions did not hold. Higher post-treatment RMSE reflects the large treatment effect. ATT is average treatment effect on the treated over September 2005 - December 2009.*
+
+*Note: Diagnostics from Two-Step Synthetic Control algorithm. MSC(c) is the selected Modified Synthetic Control method. Higher post-treatment RMSE reflects large treatment effect. ATT is average treatment effect on the treated over September 2005 - December 2009.*
 
 \newpage
 
