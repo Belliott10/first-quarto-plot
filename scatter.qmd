@@ -6,7 +6,7 @@ format:
     documentclass: article
     fontsize: 12pt
     geometry: margin=1in
-    linestretch: 2
+    linestretch: 1.8
     pdf-engine: xelatex
     keep-tex: true
 
@@ -26,7 +26,9 @@ execute:
 
 \vspace*{2cm}
 
-{\LARGE \textbf{The Economic Impact of Hurricane Katrina on Local Employment: A Synthetic Control Approach}}
+{\LARGE \textbf{The Economic Impact of Hurricane Katrina on Local Employment:
+
+A Synthetic Control Approach}}
 
 \vspace{2cm}
 
@@ -65,9 +67,7 @@ The treated unit is the New Orleans–Metairie MSA, which was directly and sever
 
 ## Emperical Strategy
 The empirical strategy employs the Synthetic Control Method (SCM) developed by Abadie and Gardeazabal (2003) and extended by Abadie, Diamond, and Hainmueller (2010). SCM estimates the causal impact of an intervention by constructing a weighted combination of control units that best approximates the pre-treatment characteristics of the treated unit. The synthetic control finds the weight vector w that minimizes the distance between New Orleans and the weighted average of donor MSAs in the pre-treatment period:
-$$ 
-\mathbf{w}^{\mathrm{SCM}} = \underset{\mathbf{w}^{\mathrm{SCM}} \in \mathcal{W}_{\mathrm{conv}}}{\operatorname*{argmin}} \; \left\| \mathbf{y}_1^{\mathcal{T}_1} - \mathbf{Y}_0^{\mathcal{T}_1} \mathbf{w}^{\mathrm{SCM}} \right\|_2^2,
-$$ where $\mathcal{W}_{\mathrm{conv}} = \{\mathbf{w}^{\mathrm{SCM}} \in \mathbb{R}_{\ge 0}^{N_0} \mid \mathbf{1}^\top \mathbf{w} = 1\}$.
+$$ \mathbf{w}^{\mathrm{SCM}} = \underset{\mathbf{w}^{\mathrm{SCM}} \in \mathcal{W}_{\mathrm{conv}}}{\operatorname*{argmin}} \; \left\| \mathbf{y}_1^{\mathcal{T}_1} - \mathbf{Y}_0^{\mathcal{T}_1} \mathbf{w}^{\mathrm{SCM}} \right\|_2^2, $$ where $\mathcal{W}_{\mathrm{conv}} = \{\mathbf{w}^{\mathrm{SCM}} \in \mathbb{R}_{\ge 0}^{N_0} \mid \mathbf{1}^\top \mathbf{w} = 1\}$.
 
 ## The Two-Step Synthetic Control Method
 The Two-Step Synthetic Control (TSSC) method developed by Li and Shankar (2023) addresses how to select among multiple synthetic control estimators to balance reducing bias and increasing efficiency. The standard SC method imposes three restrictions: (1) zero intercept, (2) weights sum to one, and (3) non-negative weights. Modified Synthetic Control (MSC) methods relax some restrictions. MSC(a) relaxes restriction (1), MSC(b) relaxes restriction (2), and MSC(c) relaxes both (1) and (2), retaining only non-negativity.
@@ -305,10 +305,7 @@ plt.show()
 
 \newpage
 
-\appendix
-\renewcommand{\thefigure}{A\arabic{figure}}
-\setcounter{figure}{0}
-# Appendix {.unnumbered}
+# Appendix A: Figures {.unnumbered}
 
 ```{python}
 #| label: fig-naive
@@ -361,7 +358,7 @@ plt.show()
 
 \newpage
 
-# Appendix A: Code {.unnumbered}
+# Appendix B: Code {.unnumbered}
 
 The following code was used to generate all empirical results and figures in the paper.
 
@@ -526,10 +523,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-\appendix
-\renewcommand{\thefigure}{A\arabic{figure}}
-\setcounter{figure}{0}
-# Appendix {.unnumbered}
+# Appendix A: Figures {.unnumbered}
 
 ```{python}
 #| echo: true
