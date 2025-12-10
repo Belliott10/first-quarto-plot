@@ -26,9 +26,8 @@ execute:
 
 \vspace*{2cm}
 
-{\LARGE \textbf{The Economic Impact of Hurricane Katrina on Local Employment:
-
-A Synthetic Control Approach}}
+{\LARGE \textbf{The Economic Impact of Hurricane Katrina on Local Employment:}}\\[0.3cm]
+{\LARGE \textbf{A Synthetic Control Approach}}
 
 \vspace{2cm}
 
