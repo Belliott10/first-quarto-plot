@@ -65,11 +65,7 @@ The analysis uses monthly employment data from the Bureau of Labor Statistics (B
 The treated unit is the New Orleans–Metairie MSA, which was directly and severely impacted by Hurricane Katrina in August 2005. The donor pool consists of 273 other U.S. metropolitan statistical areas that were not directly exposed to Hurricane Katrina's destruction. MSAs in Louisiana (other than New Orleans), Mississippi, and Alabama that experienced direct hurricane impacts are excluded from the donor pool to ensure that control units were not themselves affected by the disaster. The pre-treatment period spans January 1990 through August 2005 (188 months), providing a lengthy baseline for matching. The post-treatment period covers September 2005 through December 2009 (52 months), allowing examination of both immediate and medium-term employment effects. The dataset is already cleaned and structured, facilitating efficient analysis and replication.
 
 ## Emperical Strategy
-The empirical strategy employs the Synthetic Control Method (SCM) developed by Abadie and Gardeazabal (2003) and extended by Abadie, Diamond, and Hainmueller (2010). SCM estimates the causal impact of an intervention by constructing a weighted combination of control units that best approximates the pre-treatment characteristics of the treated unit. The synthetic control finds the weight vector w that minimizes the distance between New Orleans and the weighted average of donor MSAs in the pre-treatment period: $ \mathbf{w}^{\mathrm{SCM}} = 
-\underset{\mathbf{w}^{\mathrm{SCM}} \in \mathcal{W}_{\mathrm{conv}}}{\arg\min} 
-\| \mathbf{y}_1^{\mathcal{T}_1} - \mathbf{Y}_0^{\mathcal{T}_1} \mathbf{w}^{\mathrm{SCM}} \|_2^2 $,
-where $\mathcal{W}_{\mathrm{conv}} = \{\mathbf{w}^{\mathrm{SCM}} \in \mathbb{R}_{\ge 0}^{N_0} \mid 
-\mathbf{1}^\top \mathbf{w} = 1\}$.
+The empirical strategy employs the Synthetic Control Method (SCM) developed by Abadie and Gardeazabal (2003) and extended by Abadie, Diamond, and Hainmueller (2010). SCM estimates the causal impact of an intervention by constructing a weighted combination of control units that best approximates the pre-treatment characteristics of the treated unit. The synthetic control finds the weight vector that minimizes the distance between New Orleans and the weighted average of donor MSAs in the pre-treatment period: $\mathbf{w}^{\mathrm{SCM}} = \underset{\mathbf{w}^{\mathrm{SCM}} \in \mathcal{W}_{\mathrm{conv}}}{\arg\min} \left\| \mathbf{y}_1^{\mathcal{T}_1} - \mathbf{Y}_0^{\mathcal{T}_1} \mathbf{w}^{\mathrm{SCM}} \right\|_2^2$, where $\mathcal{W}_{\mathrm{conv}} = \{\mathbf{w}^{\mathrm{SCM}} \in \mathbb{R}_{\ge 0}^{N_0} \mid \mathbf{1}^\top \mathbf{w} = 1\}$.
 
 ## The Two-Step Synthetic Control Method
 The Two-Step Synthetic Control (TSSC) method developed by Li and Shankar (2023) addresses how to select among multiple synthetic control estimators to balance reducing bias and increasing efficiency. The standard SC method imposes three restrictions: (1) zero intercept, (2) weights sum to one, and (3) non-negative weights. Modified Synthetic Control (MSC) methods relax some restrictions. MSC(a) relaxes restriction (1), MSC(b) relaxes restriction (2), and MSC(c) relaxes both (1) and (2), retaining only non-negativity.
@@ -123,6 +119,8 @@ Abadie, A., Diamond, A., & Hainmueller, J. (2010). Synthetic control methods for
 
 Abadie, A., & Gardeazabal, J. (2003). The economic costs of conflict: A case study of the Basque Country. *American Economic Review*, 93(1), 113-132.
 
+Coffman, M., & Noy, I. (2012). Hurricane Iniki: Measuring the long-term economic impact of a natural disaster using synthetic control. *Environment and Development Economics*, 17(2), 187-205.
+
 Deryugina, T., Kawano, L., & Levitt, S. (2018). The economic impact of Hurricane Katrina on its victims: Evidence from individual tax returns. *American Economic Journal: Applied Economics*, 10(2), 202-233.
 
 Groen, J. A., Kutzbach, M. J., & Polivka, A. E. (2020). Storms and jobs: The effect of hurricanes on individuals' employment and earnings over the long term. *Journal of Labor Economics*, 38(3), 653-685.
@@ -131,11 +129,11 @@ Groen, J. A., & Polivka, A. E. (2008a). The effect of Hurricane Katrina on the l
 
 Groen, J. A., & Polivka, A. E. (2010). Going home after Hurricane Katrina: Determinants of return migration and changes in affected areas. *Demography*, 47(4), 821-844.
 
-Li, K. T., & Shankar, V. (2023). A two-step synthetic control approach for estimating causal effects of marketing events. *Management Science*, 69(11), 6890-6908.
+Li, K. T., & Shankar, V. (2023). A two-step synthetic control approach for estimating causal effects of marketing events. *Management Science*, 70(6), 3381-4165.
 
 Vigdor, J. L. (2008). The economic aftermath of Hurricane Katrina. *Journal of Economic Perspectives*, 22(4), 135-154.
 
-Yun, S. D., & Kim, B. (2022). Causal inference of ambiguous natural experiments with instrumental variables and synthetic controls: The case of Hurricane Katrina. *Journal of Econometrics*, 228(2), 459-483.
+Yun, S. D., & Kim, A. (2022). Economic impact of natural disasters: A myth or mismeasurement? *Applied Economics Letters*, 29(10), 861–866.
 
 \newpage
 
