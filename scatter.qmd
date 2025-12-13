@@ -6,15 +6,17 @@ format:
     documentclass: article
     fontsize: 12pt
     geometry: margin=1in
-    linestretch: 1.86
+    linestretch: 1.85
     pdf-engine: xelatex
     keep-tex: true
 
 header-includes: |
-  \usepackage{parskip}
+  \usepackage{parskip}        % No paragraph indentation
   \setlength{\parindent}{0pt}
+
   \usepackage{titlesec}
 
+  % Centered section headings
   \titleformat{\section}
     {\centering\Large\bfseries}
     {\thesection}{1em}{}
@@ -22,6 +24,10 @@ header-includes: |
   \titleformat{\subsection}
     {\centering\large\bfseries}
     {\thesubsection}{1em}{}
+
+  % Fix excessive vertical spacing
+  \titlespacing{\section}{0pt}{1.5em}{0.8em}
+  \titlespacing{\subsection}{0pt}{1.2em}{0.6em}
 
 execute:
   echo: false
