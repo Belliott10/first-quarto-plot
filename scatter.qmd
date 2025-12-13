@@ -5,7 +5,7 @@ format:
     documentclass: article
     fontsize: 12pt
     geometry: margin=1in
-    linestretch: 1.9          # double spacing
+    linestretch: 2.0
     pdf-engine: xelatex
     keep-tex: true
 
@@ -16,25 +16,29 @@ header-includes: |
   % Section and Subsection Formatting
   % -------------------------
   \titleformat{\section}
-    {\centering\Large\bfseries}  % centered, bold, larger
+    {\centering\Large\bfseries}
     {\thesection}{1em}{}
 
   \titleformat{\subsection}
-    {\centering\large\bfseries}  % centered, bold, slightly smaller
+    {\centering\large\bfseries}
     {\thesubsection}{1em}{}
 
   % -------------------------
   % Reduce Vertical Spacing
   % -------------------------
-  % Arguments: {left}{before}{after}
-  \titlespacing{\section}{0pt}{0.8em}{0.5em}       % section: before, after
-  \titlespacing{\subsection}{0pt}{0.5em}{0.3em}    % subsection: before, after
+  \titlespacing{\section}{0pt}{0.8em}{0.5em}
+  \titlespacing{\subsection}{0pt}{0.5em}{0.3em}
 
   % -------------------------
   % Paragraph Formatting
   % -------------------------
   \setlength{\parindent}{0pt}  % no paragraph indentation
-  % We do NOT use \usepackage{parskip} to avoid extra vertical spacing
+  \setlength{\parskip}{0.5em}  % optional small spacing between paragraphs
+
+execute:
+  echo: false
+  warning: false
+  message: false
 ---
 
 \begin{titlepage}
