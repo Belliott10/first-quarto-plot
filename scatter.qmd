@@ -9,34 +9,28 @@ format:
     pdf-engine: pdflatex
     keep-tex: true
 
-header-includes:
-  - include: prelim.tex
-  - |
-    \usepackage{titlesec}
-    \usepackage{hyperref}
+header-includes: |
+  \input{prelim.tex}
 
-    % -------------------------
-    % Section and Subsection Formatting
-    % -------------------------
-    \titleformat{\section}
-      {\centering\Large\bfseries}
-      {\thesection}{1em}{}
+  \usepackage{titlesec}
+  \usepackage{hyperref}
 
-    \titleformat{\subsection}
-      {\centering\large\bfseries}
-      {\thesubsection}{1em}{}
+  % Section and Subsection Formatting
+  \titleformat{\section}
+    {\centering\Large\bfseries}
+    {\thesection}{1em}{}
 
-    % -------------------------
-    % Reduce Vertical Spacing
-    % -------------------------
-    \titlespacing{\section}{0pt}{0.8em}{0.5em}
-    \titlespacing{\subsection}{0pt}{0.5em}{0.3em}
+  \titleformat{\subsection}
+    {\centering\large\bfseries}
+    {\thesubsection}{1em}{}
 
-    % -------------------------
-    % Paragraph Formatting
-    % -------------------------
-    \setlength{\parindent}{0pt}  % no paragraph indentation
-    \setlength{\parskip}{0.5em}  % optional small spacing between paragraphs
+  % Reduce Vertical Spacing
+  \titlespacing{\section}{0pt}{0.8em}{0.5em}
+  \titlespacing{\subsection}{0pt}{0.5em}{0.3em}
+
+  % Paragraph Formatting
+  \setlength{\parindent}{0pt}
+  \setlength{\parskip}{0.5em}
 
 execute:
   echo: false
