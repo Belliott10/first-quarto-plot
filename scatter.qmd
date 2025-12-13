@@ -6,7 +6,7 @@ format:
     documentclass: article
     fontsize: 12pt
     geometry: margin=1in
-    linestretch: 1.85
+    linestretch: 1.9
     pdf-engine: xelatex
     keep-tex: true
 
@@ -46,30 +46,27 @@ Georgia State University\\[1.5cm]
 
 
 \begin{abstract}
-
 This paper examines the causal impact of Hurricane Katrina on employment in the New Orleans metropolitan area using the Two-Step Synthetic Control (TSSC) method. Hurricane Katrina, which struck the Gulf Coast in August 2005, was one of the most devastating natural disasters in modern U.S. history, causing widespread displacement and labor market disruptions. Using monthly employment data from 1990 to 2009, I construct a synthetic control from 273 unaffected metropolitan statistical areas that closely matches pre-Katrina New Orleans employment patterns. The TSSC algorithm selects the MSC(c) method as optimal based on pre-treatment fit. The analysis reveals catastrophic employment losses: an immediate 33\% year-over-year decline following the hurricane, with an average treatment effect of -7.37 percentage points over 2005-2009. In-time placebo tests validate causality, showing no similar effect when treatment is artificially placed in 2003. This study contributes to disaster economics by analyzing aggregate MSA-level employment with a 15-year pre-treatment period, avoiding spatial aggregation bias and per capita measurement issues. Results indicate substantial but partially recovered employment impacts, with important implications for disaster recovery policy.
-
 \end{abstract}
 
 # Introduction
-On August 29, 2005, Hurricane Katrina made landfall on the Gulf Coast, unleashing catastrophic destruction across Louisiana, Mississippi, and Alabama. The storm's impact on New Orleans was particularly severe: levee failures led to flooding of approximately 80\% of the city, displacing over 400,000 residents and causing an estimated $160 billion in damages (Vigdor, 2008). Beyond the immediate human toll, the hurricane precipitated one of the largest internal migration events in modern U.S. history and fundamentally disrupted the region's economic structure. This paper addresses a fundamental policy question: What was the causal impact of Hurricane Katrina on total non-farm employment in the New Orleans metropolitan area? Specifically, did employment in the region recover, stabilize, or suffer persistent losses relative to a counterfactual scenario where Katrina never occurred? 
- To answer this question, I employ the TSSC method developed by Li and Shankar (2023), which algorithmically selects the optimal synthetic control approach from multiple candidates and then estimates the treatment effect. The ideal experiment would randomly assign hurricane exposure to metropolitan areas, which is clearly infeasible. Instead, the identification strategy relies on the synthetic control method's core assumption: absent Hurricane Katrina, New Orleans employment would have evolved similarly to an optimally weighted combination of control MSAs. Employment is one of the most policy-relevant outcomes after natural disasters, as it reflects both the ability of displaced populations to reintegrate into the labor market and the resilience of local industries. Examining aggregate employment provides insight into regional economic recovery and the capacity for long-term adaptation following catastrophic shocks.
+On August 29, 2005, Hurricane Katrina made landfall on the Gulf Coast, unleashing catastrophic destruction across Louisiana, Mississippi, and Alabama. Hurricane Katrina caused catastrophic destruction in New Orleans; levee failures flooded much of the city and, within a week, New Orleans’ population fell from over 400,000 to near zero, with nearly half of those evacuees not having returned by mid-2007 (Vigdor, 2008). Beyond the immediate human toll, the hurricane precipitated one of the largest internal migration events in modern U.S. history and fundamentally disrupted the region's economic structure. This paper addresses a fundamental policy question: What was the causal impact of Hurricane Katrina on total non-farm employment in the New Orleans metropolitan area? Specifically, did employment in the region recover, stabilize, or suffer persistent losses relative to a counterfactual scenario where Katrina never occurred? 
+   To answer this question, I employ the TSSC method developed by Li and Shankar (2023), which algorithmically selects the optimal synthetic control approach from multiple candidates and then estimates the treatment effect. The ideal experiment would randomly assign hurricane exposure to metropolitan areas, which is clearly infeasible. Instead, the identification strategy relies on the synthetic control method's core assumption: absent Hurricane Katrina, New Orleans employment would have evolved similarly to an optimally weighted combination of control MSAs. Employment is one of the most policy-relevant outcomes after natural disasters, as it reflects both the ability of displaced populations to reintegrate into the labor market and the resilience of local industries. Examining aggregate employment provides insight into regional economic recovery and the capacity for long-term adaptation following catastrophic shocks.
 
 # Background and Literature Review
 ## Prior Research on Hurricane Katrina
-The economic consequences of natural disasters have been studied extensively, yet results often diverge depending on methodology, data aggregation, and geographic scope. The literature on Hurricane Katrina's economic impacts spans individual outcomes, migration patterns, and aggregate effects. Groen and Polivka (2008a, 2008b) used Current Population Survey data to analyze labor market outcomes of evacuees through October 2006 and found evacuees experienced worse labor market outcomes initially, with homeowners and higher-income individuals more likely to return. Deryugina, Kawano, and Levitt (2018) tracked victims over a decade using tax data and found resilient individual outcomes, with earnings gaps erased within a year through federal aid and worker mobility to stronger labor markets. Groen, Kutzbach, and Polivka (2020) found long-term heterogeneity, with some workers permanently relocating to higher-wage markets while returnees faced persistent challenges.
-Vigdor (2008) documented that nearly half of evacuees had not returned by mid-2007, with selective return migration causing demographic shifts. Fewer studies examine aggregate regional employment. Yun and Kim (2022) applied synthetic control to GDP per capita, cautioning that per capita measures might misrepresent growth when population declines sharply highlighting spatial aggregation bias and measurement issues which can distort disaster impact estimates and that MSA-level analysis better captures localized shocks than state-level aggregation. 
+The economic consequences of natural disasters have been studied extensively, yet results vary by methodology, data aggregation, and geographic scope. Research on Hurricane Katrina spans individual outcomes, migration patterns, and aggregate effects. Groen and Polivka (2008a, 2008b) used Current Population Survey data to examine labor market outcomes of evacuees through October 2006, finding initial employment losses were larger for displaced workers, with homeowners and higher-income individuals more likely to return. Deryugina, Kawano, and Levitt (2018) tracked victims over a decade using tax data, showing resilient individual outcomes, with earnings losses largely eliminated through migration to stronger labor markets. Groen, Kutzbach, and Polivka (2020) documented long-term heterogeneity, as some workers permanently relocated to higher-wage markets while returnees faced persistent challenges. Vigdor (2008) found nearly half of evacuees had not returned by mid-2007, producing demographic shifts in the affected areas. Fewer studies examine aggregate regional employment. Yun and Kim (2022) applied synthetic control to GDP per capita, cautioning that per capita measures may misrepresent disaster impacts when population declines sharply, highlighting the importance of spatial aggregation and localized analysis.
 
 ## Contribution of This Study
-This paper contributes to disaster economics literatures in several specific ways that address gaps in prior research literatures. Unlike most prior studies on Hurricane Katrina that focus primarily on individual-level outcomes or use potentially problematic per capita measures, this analysis provides direct evidence on the labor market's aggregate capacity to recover from the disaster. The use of year-over-year employment growth rates avoids level-based measurement issues while capturing the dynamics of employment change. The 15-year pre-treatment period (1990-2004) improves counterfactual credibility and reduces overfitting concerns compared to shorter baseline periods.
+This paper contributes to disaster economics by addressing gaps in prior Hurricane Katrina research. Unlike most studies focusing on individual outcomes or per capita measures, it examines aggregate employment at the metropolitan level, providing a direct measure of labor market recovery and resilience. Using year-over-year employment growth rates avoids level-based measurement issues while capturing employment dynamics. A 15-year pre-treatment period (1990–2004) improves counterfactual credibility and reduces overfitting compared to shorter baselines, while MSA-level analysis captures localized shocks better than state-level aggregation.
 
 # Data and Methodology
 ## Data
 The analysis uses monthly employment data from the Bureau of Labor Statistics (BLS) Local Area Unemployment Statistics (LAUS) program, covering U.S. metropolitan statistical areas (MSAs) from January 1990 through December 2009. The LAUS program provides comprehensive employment data for MSAs based on a combination of Current Population Survey estimates, unemployment insurance claims, and employment data from the Current Employment Statistics program. The outcome variable is year-over-year percentage change in total non-farm employment, which captures employment growth dynamics across all sectors and automatically removes seasonal patterns by comparing each month to the same month one year earlier. 
-The treated unit is the New Orleans–Metairie MSA, which was directly and severely impacted by Hurricane Katrina in August 2005. The donor pool consists of 273 other U.S. metropolitan statistical areas that were not directly exposed to Hurricane Katrina's destruction. MSAs in Louisiana (other than New Orleans), Mississippi, and Alabama that experienced direct hurricane impacts are excluded from the donor pool to ensure that control units were not themselves affected by the disaster. The pre-treatment period spans January 1990 through August 2005 (188 months), providing a lengthy baseline for matching. The post-treatment period covers September 2005 through December 2009 (52 months), allowing examination of both immediate and medium-term employment effects. 
+The treated unit is the New Orleans–Metairie MSA, which was directly and severely impacted by Hurricane Katrina in August 2005. The donor pool consists of 273 other U.S. metropolitan statistical areas that were not directly exposed to Hurricane Katrina's destruction. MSAs in Louisiana (other than New Orleans), Mississippi, and Alabama that experienced direct hurricane impacts are excluded from the donor pool to ensure that control units were not themselves affected by the disaster. The pre-treatment period spans December 1990 through August 2005 (177 months), providing a lengthy baseline for matching. The post-treatment period covers September 2005 through December 2009 (52 months), allowing examination of both immediate and medium-term employment effects. 
 
 ## Emperical Strategy
-The empirical strategy employs the Synthetic Control Method (SCM) developed by Abadie and Gardeazabal (2003) and extended by Abadie, Diamond, and Hainmueller (2010). SCM estimates the causal impact of an intervention by constructing a weighted combination of control units that best approximates the pre-treatment characteristics of the treated unit. The synthetic control finds the weight vector that minimizes the distance between New Orleans and the weighted average of donor MSAs in the pre-treatment period: $\mathbf{w}^{\mathrm{SCM}} = \underset{\mathbf{w}^{\mathrm{SCM}} \in \mathcal{W}_{\mathrm{conv}}}{\arg\min} \left\| \mathbf{y}_1^{\mathcal{T}_1} - \mathbf{Y}_0^{\mathcal{T}_1} \mathbf{w}^{\mathrm{SCM}} \right\|_2^2$, where $\mathcal{W}_{\mathrm{conv}} = \{\mathbf{w}^{\mathrm{SCM}} \in \mathbb{R}_{\ge 0}^{N_0} \mid \mathbf{1}^\top \mathbf{w} = 1\}$.
+This analysis uses the Two-Step Synthetic Control (TSSC) method (Li & Shankar, 2023), which builds on the standard Synthetic Control Method (SCM; Abadie & Gardeazabal, 2003; Abadie, Diamond, & Hainmueller, 2010).SCM estimates the causal impact of an intervention by constructing a weighted combination of control units that best approximates the pre-treatment characteristics of the treated unit. The synthetic control finds the weight vector that minimizes the distance between New Orleans and the weighted average of donor MSAs in the pre-treatment period. 
 
 ## The Two-Step Synthetic Control Method (TSSC)
 TSSC method developed by Li and Shankar (2023) addresses how to select among multiple synthetic control estimators to balance reducing bias and increasing efficiency. The standard SC method imposes three restrictions: (1) zero intercept, (2) weights sum to one, and (3) non-negative weights. Modified Synthetic Control (MSC) methods relax some restrictions. MSC(a) relaxes restriction (1), MSC(b) relaxes restriction (2), and MSC(c) relaxes both (1) and (2), retaining only non-negativity.
@@ -77,7 +74,7 @@ The TSSC approach comprises two steps. In Step 1, the algorithm tests whether th
 For MSC(c), the synthetic control is: $\hat{Y}_{1t}^{N} = \sum_{j=2}^{N} w_j Y_{jt} + \beta$, where MSC(c) has an intercept $\beta$, nonnegative donor weights $w_j \ge 0$, and does not constrain weights to sum to 1. The treatment effect is $\tau_{1t} = Y_{1t} - \hat{Y}_{1t}^{N}$, and the average treatment effect on the treated is: $\text{ATT} = \frac{1}{T_{\text{post}}} \sum_{t = T_0 + 1}^{T} \tau_{1t}$.
 
 ## Identification
-The key assumption is that, absent Katrina, New Orleans employment would have evolved similarly to the synthetic control.The MSCc parallel trends assumption holds if the difference between the observed and predicted in the pre-treatment period is a zero mean stationary process. Additionally, we assume SUTVA (given that we drop similarly affected units) and zero anticipation. 
+The key assumption is that, absent Katrina, New Orleans employment would have evolved similarly to the synthetic control.The MSC(c) parallel trends assumption holds if the difference between the observed and predicted in the pre-treatment period is a zero mean stationary process. Additionally, we assume SUTVA (given that we drop similarly affected units) and zero anticipation. 
 
 # Results and Discussion
 ## Pre-Treatment Fit and Method Selection
@@ -88,7 +85,7 @@ Figure A2 (Appendix) displays the gap between actual New Orleans and synthetic c
 Figure 1 presents observed versus synthetic control employment growth over the full study period. During the pre-treatment period through August 2005, both series track closely with minimal divergence. At the hurricane timing, there is immediate catastrophic separation between the two lines.
 Figure 2 shows the treatment effect as the gap between observed and synthetic New Orleans employment growth. The immediate impact in late 2005 was severe, with employment growth collapsing to approximately -33% year-over-year. This represents one of the largest employment shocks to a U.S. metropolitan area in modern history, indicating that New Orleans lost roughly one-third of its employment base compared to the previous year.
 
-Following this catastrophic impact, employment growth began recovering. The gap narrowed substantially through 2006 and 2007, showing gradual convergence back toward the counterfactual. By the end of the study period in 2009, the gap had approached approximately -5%, indicating substantial but incomplete recovery. The average treatment effect on the treated over the entire post-treatment period (September 2005 through December 2009) is -7.37 percentage points.
+Following this catastrophic impact, employment growth began recovering. The gap narrowed substantially through 2006 and 2007, showing gradual convergence back toward the counterfactual. By the end of the study period in 2009, the gap had narrowed substantially, though it remained negative, reflecting substantial but incomplete recovery. The average treatment effect on the treated over the entire post-treatment period (September 2005 through December 2009) is -7.37 percentage points.
 
 ## Validation Through In-Time Placebo Test
 Figure 3 presents results from the in-time placebo test, where treatment is artificially placed in January 2003, approximately 2.5 years before the actual hurricane. At the fake treatment time shown by the dashed vertical line, there is no systematic employment collapse. The actual New Orleans line continues tracking the synthetic control reasonably well through 2003 and 2004 with no catastrophic break at the placebo timing.
@@ -146,7 +143,7 @@ Yun, S. D., & Kim, A. (2022). Economic impact of natural disasters: A myth or mi
 | Pre-treatment RMSE | 0.558 |
 | R-squared | 0.834 |
 | Post-treatment RMSE | 17.962 |
-| Method Selected | MSCc |
+| Method Selected | MSC(c) |
 | Average Treatment Effect (ATT) | -7.37 pp |
 
 *Note: Diagnostics from Two-Step Synthetic Control algorithm. MSC(c) is the selected Modified Synthetic Control method. Higher post-treatment RMSE reflects large treatment effect. ATT is average treatment effect on the treated over September 2005 - December 2009.*
@@ -198,7 +195,7 @@ full_index = pre_index.append(post_index)
 
 fig, ax = plt.subplots(figsize=(10, 6))
 ax.plot(full_index, y_obs, label="New Orleans-Metairie, LA MSA (Observed)", linewidth=2.5, color='black')
-ax.plot(full_index, y_cf, label="Synthetic Control MSCc (Recommended)", linewidth=2.5, color='red')
+ax.plot(full_index, y_cf, label="Synthetic Control MSC(c) (Recommended)", linewidth=2.5, color='red')
 ax.axvline(x=pd.to_datetime(split_date), color="gray", linestyle=":", linewidth=2, 
            label="Hurricane Katrina (Aug 2005)")
 ax.set_xlabel("Date", fontsize=11)
@@ -308,7 +305,28 @@ plt.show()
 
 \newpage
 
+# --- Plot the treatment effect (the gap) ---
+gap = y_obs - y_cf
+
+plt.figure(figsize=(12, 6))
+plt.plot(full_index, gap, color="black", linewidth=2, label="Treatment Effect (Observed − Synthetic)")
+plt.axhline(0, color="red", linestyle="--")
+plt.axvline(x=pd.to_datetime(split_date), color="gray", linestyle=":", label="Treatment (Aug 2005)")
+
+plt.xlabel("Date")
+plt.ylabel("Gap (Percentage Points)")
+plt.title("Estimated Treatment Effect — Hurricane Katrina")
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+*Note: Gap between actual New Orleans employment growth and synthetic control from 1990 through 2009. The vertical line marks the treatment (Hurricane Katrina, Aug 2005). Post-treatment divergence reflects the estimated effect and subsequent recovery. This figure emphasizes the overall magnitude and trend of the treatment effect.*
+
+\newpage
+
 # Appendix A: Figures {.unnumbered}
+\renewcommand{\thefigure}{A.\arabic{figure}}
+\setcounter{figure}{0}
 
 ```{python}
 #| label: fig-naive
@@ -337,13 +355,13 @@ sc_diagplot([config_diagplot])
 ```{python}
 #| label: fig-pretreatment
 #| fig-cap: "Pre-Treatment Fit Validation"
-#| fig-width: 10
+#| fig-width: 12
 #| fig-height: 6
 
 pre_gap = gap[:pre_periods]
 pre_dates = full_index[:pre_periods]
 
-fig, ax = plt.subplots(figsize=(10, 6))
+fig, ax = plt.subplots(figsize=(12, 6))
 ax.plot(pre_dates, pre_gap, color="black", linewidth=2.5, label="Gap (Pre-Treatment)")
 ax.axhline(0, color="red", linestyle="--", linewidth=1.5, alpha=0.7)
 ax.set_xlabel("Date", fontsize=11)
@@ -356,8 +374,7 @@ ax.spines['right'].set_visible(False)
 plt.tight_layout()
 plt.show()
 ```
-*Note: Gap between actual New Orleans employment growth and synthetic control during pre-treatment period (1990-2005). Gap fluctuates tightly around zero throughout 15-year baseline, validating the identification assumption.*
-
+*Note: Gap between actual and synthetic control during the pre-treatment period (1990–2005). The gap fluctuates tightly around zero, validating the identification assumption and the quality of the synthetic control fit. This figure highlights the small pre-treatment fluctuations that are less visible in the main figure.*
 
 \newpage
 
@@ -383,8 +400,10 @@ import numpy as np
 from mlsynth import TSSC
 import matplotlib.pyplot as plt
 
+#Load dataset
 df = pd.read_csv("Total_Non_Farm_Employment_Katrina.csv")
 
+# Shared config
 config = {
     "df": df,
     "outcome": "YoY_NFE",
@@ -402,22 +421,30 @@ y_cf = Results[3].raw_results['Vectors']['Counterfactual']
 post_periods = Results[3].raw_results['Fit']['Post-Periods']
 pre_periods = Results[3].raw_results['Fit']['Pre-Periods']
 
+ #Parameters
 split_date = "2005-08"
+
+# Create the pre-treatment date range
 pre_index = pd.date_range(
     end=pd.Period(split_date, freq="M").start_time - pd.offsets.MonthEnd(1),
     periods=pre_periods,
     freq="M"
 )
+
+# Create the post-treatment date range (including August 2005)
 post_index = pd.date_range(
     start=pd.Period(split_date, freq="M").start_time,
     periods=post_periods,
     freq="M"
 )
+
+# Combine them
 full_index = pre_index.append(post_index)
 
+# --- Plot observed vs synthetic control ---
 fig, ax = plt.subplots(figsize=(10, 6))
 ax.plot(full_index, y_obs, label="New Orleans-Metairie, LA MSA (Observed)", linewidth=2.5, color='black')
-ax.plot(full_index, y_cf, label="Synthetic Control MSCc (Recommended)", linewidth=2.5, color='red')
+ax.plot(full_index, y_cf, label="Synthetic Control MSC(c) (Recommended)", linewidth=2.5, color='red')
 ax.axvline(x=pd.to_datetime(split_date), color="gray", linestyle=":", linewidth=2, 
            label="Hurricane Katrina (Aug 2005)")
 ax.set_xlabel("Date", fontsize=11)
@@ -488,13 +515,17 @@ plt.show()
 df_placebo = pd.read_csv("Total_Non_Farm_Employment_Katrina.csv")
 df_placebo["date"] = pd.to_datetime(df_placebo["date"])
 
+# To define the placebo treatment date and the treated unit
 placebo_date = "2003-08-31"
 treated_unit = "New Orleans-Metairie, LA MSA"
+
+# Create the placebo treatment variable
 df_placebo["Katrina"] = np.where(
     (df_placebo["MSA Title"] == treated_unit) & (df_placebo["date"] >= placebo_date),
     1, 0
 )
 
+# Shared config
 config_placebo = {
     "df": df_placebo,
     "outcome": "YoY_NFE",
@@ -522,6 +553,27 @@ ax.grid(alpha=0.3)
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 plt.title("Causal Impact on YoY_NFE", fontsize=16, weight="bold")
+plt.tight_layout()
+plt.show()
+```
+
+```{python}
+#| echo: true
+#| eval: false
+#| wrap: true
+
+# --- Plot the treatment effect (the gap) ---
+gap = y_obs - y_cf
+
+plt.figure(figsize=(12, 6))
+plt.plot(full_index, gap, color="black", linewidth=2, label="Treatment Effect (Observed − Synthetic)")
+plt.axhline(0, color="red", linestyle="--")
+plt.axvline(x=pd.to_datetime(split_date), color="gray", linestyle=":", label="Treatment (Aug 2005)")
+
+plt.xlabel("Date")
+plt.ylabel("Gap (Percentage Points)"
+plt.title("Estimated Treatment Effect — Hurricane Katrina")
+plt.legend()
 plt.tight_layout()
 plt.show()
 ```
