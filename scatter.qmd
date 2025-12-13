@@ -6,7 +6,7 @@ format:
     documentclass: article
     fontsize: 12pt
     geometry: margin=1in
-    linestretch: 1.9
+    linestretch: 1.87
     pdf-engine: xelatex
     keep-tex: true
 
@@ -303,24 +303,6 @@ plt.show()
 
 *Note: Validation test with placebo treatment placed in 2003 (dashed vertical line). Gap shows no systematic collapse at placebo timing, with catastrophic impact appearing only at actual hurricane time in 2005.*
 
-\newpage
-
-# --- Plot the treatment effect (the gap) ---
-gap = y_obs - y_cf
-
-plt.figure(figsize=(12, 6))
-plt.plot(full_index, gap, color="black", linewidth=2, label="Treatment Effect (Observed − Synthetic)")
-plt.axhline(0, color="red", linestyle="--")
-plt.axvline(x=pd.to_datetime(split_date), color="gray", linestyle=":", label="Treatment (Aug 2005)")
-
-plt.xlabel("Date")
-plt.ylabel("Gap (Percentage Points)")
-plt.title("Estimated Treatment Effect — Hurricane Katrina")
-plt.legend()
-plt.tight_layout()
-plt.show()
-
-*Note: Gap between actual New Orleans employment growth and synthetic control from 1990 through 2009. The vertical line marks the treatment (Hurricane Katrina, Aug 2005). Post-treatment divergence reflects the estimated effect and subsequent recovery. This figure emphasizes the overall magnitude and trend of the treatment effect.*
 
 \newpage
 
@@ -374,7 +356,7 @@ ax.spines['right'].set_visible(False)
 plt.tight_layout()
 plt.show()
 ```
-*Note: Gap between actual and synthetic control during the pre-treatment period (1990–2005). The gap fluctuates tightly around zero, validating the identification assumption and the quality of the synthetic control fit. This figure highlights the small pre-treatment fluctuations that are less visible in the main figure.*
+*Note: Gap between actual New Orleans employment growth and synthetic control during pre-treatment period (1990-2005). Gap fluctuates tightly around zero throughout 15-year baseline, validating the identification assumption and the quality of the synthetic control fit.*
 
 \newpage
 
@@ -557,26 +539,6 @@ plt.tight_layout()
 plt.show()
 ```
 
-```{python}
-#| echo: true
-#| eval: false
-#| wrap: true
-
-# --- Plot the treatment effect (the gap) ---
-gap = y_obs - y_cf
-
-plt.figure(figsize=(12, 6))
-plt.plot(full_index, gap, color="black", linewidth=2, label="Treatment Effect (Observed − Synthetic)")
-plt.axhline(0, color="red", linestyle="--")
-plt.axvline(x=pd.to_datetime(split_date), color="gray", linestyle=":", label="Treatment (Aug 2005)")
-
-plt.xlabel("Date")
-plt.ylabel("Gap (Percentage Points)"
-plt.title("Estimated Treatment Effect — Hurricane Katrina")
-plt.legend()
-plt.tight_layout()
-plt.show()
-```
 
 # Appendix A: Figures {.unnumbered}
 
