@@ -6,11 +6,11 @@ format:
     fontsize: 12pt
     geometry: margin=1in
     linestretch: 1.92
-    pdf-engine: xelatex
+    pdf-engine: pdflatex
     keep-tex: true
 
 header-includes:
-  - include: prelim (1).tex
+  - include: prelim.tex
   - |
     \usepackage{titlesec}
     \usepackage{hyperref}
