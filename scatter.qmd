@@ -6,7 +6,7 @@ format:
     documentclass: article
     fontsize: 12pt
     geometry: margin=1in
-    linestretch: 1.9
+    linestretch: 1.85
     pdf-engine: xelatex
     keep-tex: true
 
