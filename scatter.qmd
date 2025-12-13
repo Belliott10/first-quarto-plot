@@ -11,6 +11,7 @@ format:
 
 header-includes: |
   \usepackage{titlesec}
+  \usepackage{hyperref}  # << Add this line
 
   % -------------------------
   % Section and Subsection Formatting
@@ -126,6 +127,8 @@ The findings carry important policy implications. The substantial recovery sugge
 
 # Conclusion
 This paper uses the TSSC method to estimate Hurricane Katrina's causal impact on New Orleans employment. The analysis reveals catastrophic immediate employment losses of approximately -33\% year-over-year following the hurricane, with substantial but incomplete recovery over the subsequent four years. In-time placebo tests validate the causal interpretation by showing no effect when treatment is artificially placed in 2003, with the catastrophic impact appearing only at the actual hurricane timing. This study advances disaster economics by analyzing aggregate MSA-level employment with a 15-year pre-treatment period, avoiding spatial aggregation bias and per capita measurement issues raised by recent methodological literature. The findings suggest that while catastrophic disasters cause severe short-term disruptions, substantial recovery is possible with sustained disaster assistance, business support, housing reconstruction, and workforce development programs. Future research should examine longer-term effects beyond 2009, disaggregate impacts by industry and demographics, and explore the mechanisms underlying successful recovery to inform more effective disaster policy design.
+
+All code and files for this analysis are publicly available\footnote{\href{https://github.com/Belliott10/first-quarto-plot}{GitHub Repository}}.
 
 \newpage
 
