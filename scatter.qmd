@@ -1,38 +1,40 @@
 ---
 title: ""
-
 format:
   pdf:
     documentclass: article
     fontsize: 12pt
     geometry: margin=1in
-    linestretch: 1.85
+    linestretch: 1.9          # double spacing
     pdf-engine: xelatex
     keep-tex: true
 
 header-includes: |
-  \usepackage{parskip}        % No paragraph indentation
-  \setlength{\parindent}{0pt}
-
   \usepackage{titlesec}
 
-  % Centered section headings
+  % -------------------------
+  % Section and Subsection Formatting
+  % -------------------------
   \titleformat{\section}
-    {\centering\Large\bfseries}
+    {\centering\Large\bfseries}  % centered, bold, larger
     {\thesection}{1em}{}
 
   \titleformat{\subsection}
-    {\centering\large\bfseries}
+    {\centering\large\bfseries}  % centered, bold, slightly smaller
     {\thesubsection}{1em}{}
 
-  % Fix excessive vertical spacing
-  \titlespacing{\section}{0pt}{1.5em}{0.8em}
-  \titlespacing{\subsection}{0pt}{1.2em}{0.6em}
+  % -------------------------
+  % Reduce Vertical Spacing
+  % -------------------------
+  % Arguments: {left}{before}{after}
+  \titlespacing{\section}{0pt}{0.8em}{0.5em}       % section: before, after
+  \titlespacing{\subsection}{0pt}{0.5em}{0.3em}    % subsection: before, after
 
-execute:
-  echo: false
-  warning: false
-  message: false
+  % -------------------------
+  % Paragraph Formatting
+  % -------------------------
+  \setlength{\parindent}{0pt}  % no paragraph indentation
+  % We do NOT use \usepackage{parskip} to avoid extra vertical spacing
 ---
 
 \begin{titlepage}
