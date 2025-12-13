@@ -6,20 +6,28 @@ format:
     documentclass: article
     fontsize: 12pt
     geometry: margin=1in
-    linestretch: 1.87
+    linestretch: 1.86
     pdf-engine: xelatex
     keep-tex: true
 
 header-includes: |
-  \usepackage{parskip}      % removes paragraph indentation
+  \usepackage{parskip}
   \setlength{\parindent}{0pt}
+  \usepackage{titlesec}
+
+  \titleformat{\section}
+    {\centering\Large\bfseries}
+    {\thesection}{1em}{}
+
+  \titleformat{\subsection}
+    {\centering\large\bfseries}
+    {\thesubsection}{1em}{}
 
 execute:
   echo: false
   warning: false
   message: false
 ---
-
 
 \begin{titlepage}
 \begin{center}
@@ -89,8 +97,7 @@ Following this catastrophic impact, employment growth began recovering. The gap 
 
 ## Validation Through In-Time Placebo Test
 Figure 3 presents results from the in-time placebo test, where treatment is artificially placed in January 2003, approximately 2.5 years before the actual hurricane. At the fake treatment time shown by the dashed vertical line, there is no systematic employment collapse. The actual New Orleans line continues tracking the synthetic control reasonably well through 2003 and 2004 with no catastrophic break at the placebo timing.
-
-However, at the actual Hurricane Katrina timing in late 2005, the massive employment collapse appears. This temporal specificity validates the causal interpretation. If the Two-Step Synthetic Control method were simply detecting spurious patterns or pre-existing differential trends, we would expect to observe similar treatment effects at the fake treatment time in 2003. The fact that the catastrophic impact appears only when and where the hurricane actually occurred demonstrates that Hurricane Katrina caused the employment losses rather than these losses reflecting methodological artifacts or continuation of pre-existing trends.
+  However, at the actual Hurricane Katrina timing in late 2005, the massive employment collapse appears. This temporal specificity validates the causal interpretation. If the Two-Step Synthetic Control method were simply detecting spurious patterns or pre-existing differential trends, we would expect to observe similar treatment effects at the fake treatment time in 2003. The fact that the catastrophic impact appears only when and where the hurricane actually occurred demonstrates that Hurricane Katrina caused the employment losses rather than these losses reflecting methodological artifacts or continuation of pre-existing trends.
 
 ## Comparison to Prior Literature
 The findings complement prior research while revealing distinct mechanisms. Deryugina, Kawano, and Levitt (2018) found individual victims' earnings recovered through migration to stronger labor markets. My regional analysis shows substantial aggregate recovery through a different mechanism: enough workers returned to restore much of the region's employment base. This distinction matters for policy: individuals can recover by relocating, but regions themselves can recover with sufficient support. 
@@ -98,7 +105,8 @@ The findings contrast with Vigdor's (2008) documentation of persistent populatio
 
 # Discussion
 ## Interpretation of Findings 
-The results show that Hurricane Katrina caused catastrophic short-term employment losses in New Orleans, with an average treatment effect of 7.37 percentage points below the counterfactual between 2005 and 2009. Employment declined by roughly one third in the first year, making it one of the most severe labor market shocks experienced by any modern United States metropolitan area. For comparison, the worst point of the Great Recession saw national employment fall by about six percent, which highlights the extraordinary scale of the Katrina shock. Despite this dramatic initial impact, the long-run pattern in the results shows substantial recovery. The employment gap steadily narrowed from 2006 through 2008, and by 2009 growth rates were moving close to the synthetic control, although not fully matching it. This indicates that the regional economy, while deeply affected, demonstrated significant resilience and capacity for recovery over time. Several forces likely contributed to this rebound. Federal disaster assistance programs provided more than one hundred billion dollars in support that helped households and businesses rebuild. Reconstruction created a surge in construction employment that helped compensate for losses in other industries, and prior research confirms that construction activity even exceeded pre-Katrina levels during the peak rebuilding years. Population return also played a role, as homeowners, higher-income residents, and individuals with strong local ties were more likely to come back, which helped restore both the labor force and consumer demand. Businesses that survived adapted to the changing environment, and new firms entered the market to serve returning residents and support reconstruction activity.
+The results show that Hurricane Katrina caused catastrophic short-term employment losses in New Orleans, with an average treatment effect of 7.37 percentage points below the counterfactual between 2005 and 2009. Employment declined by roughly one third in the first year, representing an exceptionally large labor market shock. Despite this dramatic initial impact, employment growth gradually recovered. The gap narrowed steadily from 2006 through 2008, and by 2009 growth rates were approaching the synthetic control, though not fully converging. This pattern indicates substantial regional resilience following a severe disruption.
+Several forces likely contributed to this recovery. Federal disaster assistance provided large-scale support for households and businesses, while reconstruction activity generated significant demand for labor, particularly in construction, and prior research confirms that construction activity even exceeded pre-Katrina levels during the peak rebuilding years. Population return also played a role, as homeowners, higher-income residents, and individuals with strong local ties were more likely to return, helping restore labor supply and consumer demand. At the same time, surviving firms adapted to post-disaster conditions, and new businesses entered to support rebuilding and returning residents.
 
 ## Limitations and Policy Implications
 Several limitations deserve consideration. Year-over-year growth rates differ from absolute employment levels. A return of growth rates to zero does not necessarily mean full recovery of pre-disaster employment levels if the level was permanently depressed. The study period ends in 2009, missing longer-term dynamics. The 2008-2009 Great Recession occurred during the post-treatment period, potentially confounding Katrina effects, though the synthetic control should account for common recession shocks. My aggregate analysis masks important heterogeneity across industries and demographics, with prior literature documenting that lower-income workers and minority populations faced greater barriers to return.
