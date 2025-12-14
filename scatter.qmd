@@ -91,7 +91,6 @@ TSSC method developed by Li and Shankar (2023) addresses how to select among mul
 The TSSC approach comprises two steps. In Step 1, the algorithm tests whether the SC pretrends assumption holds by testing restrictions (1) and (2). If these restrictions are violated, a more flexible MSC method is recommended to reduce bias. If restrictions hold, the more efficient SC method is used. In Step 2, the algorithm applies the selected method. In my analysis, the algorithm selected MSC(c) based on superior pre-treatment fit (RMSE = 0.558, R-squared = 0.834), indicating both restrictions were violated.
 For MSC(c), the synthetic control is: $\hat{Y}_{1t}^{N} = \sum_{j=2}^{N} w_j Y_{jt} + \beta$, where MSC(c) has an intercept $\beta$, nonnegative donor weights $w_j \ge 0$, and does not constrain weights to sum to 1. The treatment effect is $\tau_{1t} = Y_{1t} - \hat{Y}_{1t}^{N}$, and the average treatment effect on the treated is: $\text{ATT} = \frac{1}{T_{\text{post}}} \sum_{t = T_0 + 1}^{T} \tau_{1t}$.
 
-## Identification
 The key assumption is that, absent Katrina, New Orleans employment would have evolved similarly to the synthetic control.The MSC(c) parallel trends assumption holds if the difference between the observed and predicted in the pre-treatment period is a zero mean stationary process. Additionally, we assume SUTVA (given that we drop similarly affected units) and zero anticipation. 
 
 # Results and Discussion
@@ -124,8 +123,6 @@ The findings carry important policy implications. The substantial recovery sugge
 
 # Conclusion
 This paper uses the TSSC method to estimate Hurricane Katrina's causal impact on New Orleans employment. The analysis reveals catastrophic immediate employment losses of approximately -33\% year-over-year following the hurricane, with substantial but incomplete recovery over the subsequent four years. In-time placebo tests validate the causal interpretation by showing no effect when treatment is artificially placed in 2003, with the catastrophic impact appearing only at the actual hurricane timing. This study advances disaster economics by analyzing aggregate MSA-level employment with a 15-year pre-treatment period, avoiding spatial aggregation bias and per capita measurement issues raised by recent methodological literature. The findings suggest that while catastrophic disasters cause severe short-term disruptions, substantial recovery is possible with sustained disaster assistance, business support, housing reconstruction, and workforce development programs. Future research should examine longer-term effects beyond 2009, disaggregate impacts by industry and demographics, and explore the mechanisms underlying successful recovery to inform more effective disaster policy design.
-
-All code and files for this analysis are publicly available\footnote{\href{https://github.com/Belliott10/first-quarto-plot}{GitHub Repository}}.
 
 \newpage
 
